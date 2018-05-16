@@ -157,7 +157,7 @@
 
                         <div class="search-form wow pulse" data-wow-delay="0.8s" style="width: 400px;float: left;top: 50px;background: rgba(64,64,64,.5);">
 
-                            <form action="properties.html" class=" form-inline">
+                            <form method="GET" action="resultSearch.html" class=" form-inline">
                                 <div class="form-group">
                                     <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Chọn địa điểm ">
 
@@ -197,34 +197,35 @@
                         <div class="search-form wow pulse" data-wow-delay="0.8s" style="width: 400px; float: right;top: 50px;background: rgba(64,64,64,.6); ">
 							
                             
-                            <form action="properties.html" class=" form-inline">
+                            <form method="GET" action="resultAdvisory.html" class="form-inline">
                                 <div class="form-group" >
-                                    <select id="formAge" class="selectpicker show-tick form-control" required="">
-                                                    	<option value="" disabled selected>Chọn Tuổi</option>
-                                                        <option value="ty" > Tý</option>
-                                                        <option value="suu" > Sửu</option>
-                                                        <option value="dan"> Dần</option>
-                                                        <option value="mao"> Mão</option>
-                                                        <option value="thin">Thìn</option>
-                                                        <option value="ty"> Tỵ</option>
-                                                        <option value="ngo"> Ngọ</option>
-                                                        <option value="mui">Mùi</option>
-                                                        <option value="than">Thân</option>
-                                                        <option value="dau">Dậu </option>
-                                                        <option value="tuat">Tuất </option>
-                                                        <option value="hoi">Hợi</option>
+                                    <select id="formAge" name="age" class="selectpicker show-tick form-control" required="">
+                                                    	<option name="age" value="" disabled selected>Chọn Tuổi</option>
+                                                        <option name="age" value="ty" > Tý</option>
+                                                        <option name="age" value="suu" > Sửu</option>
+                                                        <option name="age" value="dan"> Dần</option>
+                                                        <option name="age" value="mao"> Mão</option>
+                                                        <option name="age" value="thin">Thìn</option>
+                                                        <option name="age" value="ty"> Tỵ</option>
+                                                        <option name="age" value="ngo"> Ngọ</option>
+                                                        <option name="age" value="mui">Mùi</option>
+                                                        <option name="age" value="than">Thân</option>
+                                                        <option name="age" value="dau">Dậu </option>
+                                                        <option name="age" value="tuat">Tuất </option>
+                                                        <option name="age" value="hoi">Hợi</option>
                                                 </select>
                                 </div>
                                 <br><br>
                                 <div class="form-group">
-                                    <select id="formSex" class="selectpicker show-tick form-control">
-                                                        <option value="" disabled selected>Chọn Giới Tính</option>
-                                                        <option value="true" > Nam</option>
-                                                        <option value="false" > Nữ</option>
+                                    <select id="formSex" name="sex" class="selectpicker show-tick form-control">
+                                                        <option name="sex" value="" disabled selected>Chọn Giới Tính</option>
+                                                        <option name="sex" value="true" > Nam</option>
+                                                        <option name="sex" value="false" > Nữ</option>
                                                 </select>
                                     </select>
-                                </div><br><br>
-                                <button class="btn search-btn" type="submit" onclick="advisory();" style="width: 150px">
+                                </div>
+                                <br><br>
+                                <button class="btn search-btn" type="submit"  style="width: 150px">
                                 <i class="fa fa-search"></i>
 								Xem Tư Vấn
                                 </button>
@@ -248,38 +249,7 @@
 
                 <div class="row">
                     <div id="allProjects" class="proerty-th">
-                        <script>
-                            $(document).ready(function () {
-                                loadAllProject();
-                            });
-                            function loadAllProject(){
-                                $.getJSON("http://localhost:8080/project/getAll", function (projects) {
-                                    var items = [];
-                                    console.log(projects);
-                                    $.each(projects, function (index, projects) {
-                                        items.push(
-                                            '<div class="col-sm-6 col-md-3 p0">'+
-                                                '<div class="box-two proerty-item">'+
-                                                    '<div class="item-thumb">'+
-                                                        '<img src="data:image/png;base64,'+projects.image.image+'">'+
-                                                    '</div>'+
-                                                    '<div class="item-entry overflow">'+
-                                                    '<h5>'+'<a href="property-1.html" >'+projects.projectName+'</a></h5>'+
-                                                        '<div class="dot-hr"></div>'+
-                                                        '<span class="pull-left"><b>Loại Dự Án :</b>'+projects.projectTypeName+'</span>'+
-                                                        '<span class="pull-right"><b>Địa Chỉ :</b>'+projects.addressName+'</span>'+                                                     
-                                                '<a href="projectDetail.html?projectId=' +projects.projectId +'">'+
-                                                '<input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
-
-                                                    '</div>'+
-                                                '</div>'+
-                                            '</div>'
-                                            );
-                                    });
-                                    $("#allProjects").append(items); 
-                                });
-                            }
-                        </script>
+                        
                     </div>
                 </div>
             </div>
@@ -422,19 +392,47 @@
                     scrollSpeed: 100,
                     easingType: 'linear'
                 };
+                loadAllProject();
             });
-            function advisory() {
-                var e = document.getElementById("formAge");
-                var age = e.options[e.selectedIndex].value;
-                var f = document.getElementById("formSex");
-                var sex = f.options[f.selectedIndex].value;
-                var data=
-                    JSON.stringify({
-                    age: age,
-                    sex: sex,
+            // function advisory() {
+            //     var e = document.getElementById("formAge");
+            //     var age = e.options[e.selectedIndex].value;
+            //     var f = document.getElementById("formSex");
+            //     var sex = f.options[f.selectedIndex].value;
+            //     var data=
+            //         JSON.stringify({
+            //         age: age,
+            //         sex: sex,
+            //         });
+            //     console.log(data);
+            //     alert("asas");    
+            // }
+            function loadAllProject(){
+                $.getJSON("http://localhost:8080/project/getAll", function (projects) {
+                    var items = [];
+                    console.log(projects);
+                    $.each(projects, function (index, projects) {
+                        items.push(
+                            '<div class="col-sm-6 col-md-3 p0">'+
+                                '<div class="box-two proerty-item">'+
+                                    '<div class="item-thumb">'+
+                                        '<img src="data:image/png;base64,'+projects.image.image+'">'+
+                                    '</div>'+
+                                    '<div class="item-entry overflow">'+
+                                    '<h5>'+'<a href="property-1.html" >'+projects.projectName+'</a></h5>'+
+                                        '<div class="dot-hr"></div>'+
+                                        '<span class="pull-left"><b>Loại Dự Án :</b>'+projects.projectTypeName+'</span>'+
+                                        '<span class="pull-right"><b>Địa Chỉ :</b>'+projects.addressName+'</span>'+                                                     
+                                '<a href="projectDetail.html?projectId=' +projects.projectId +'">'+
+                                '<input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'
+                            );
                     });
-                console.log(data);
-                alert("asas");    
+                    $("#allProjects").append(items); 
+                });
             }
         </script>
         <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>
