@@ -333,8 +333,8 @@
                         <th>Loại dự án</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="details">
+                    <!-- <tr>
                         <td>
                         </td>
                         <td>da001</td>
@@ -357,7 +357,7 @@
                         <td>2 Tỷ 300 Triệu</td>
                         <td>Bắc</td>
                         <td>Chung Cư Căn Hộ</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             
@@ -380,8 +380,48 @@
         <script src="assets/js/price-range.js"></script>
 
         <script src="assets/js/main.js"></script>
+        <script src="assets/js/app.js"></script>
 
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 100,
+                    easingType: 'linear'
+                };
+                loadAllDetailSoldByEmployee();
+            });
+            function loadAllDetailSoldByEmployee(){
+                var employeeId =getUrlVar('employeeId');
+                //alert(projectId);
+                $.getJSON("http://localhost:8080/statistical/getAllSoldByEmployee/"+projectId, function (detail) {
+                    console.log(detail);
+                    var items = [];
+                    $.each(detail, function (index, detail) {
+                        items.push(
+                           '<tr>'+
+                            '<td>'+
+                            '</td>'+
+                            '<td>'+detail.projectlId+'</td>'+
+                            '<td>'+detail.projectDetailId+'</td>'+
+                            '<td>'+detail.projectName+'</td>'+
+                            '<td>'+detail.address+'</td>'+
+                            '<td>'+detail.size+'</td>'+
+                            '<td>2 Tỷ 300 Triệu</td>'+
+                            '<td>Tây Nam</td>'+
+                            '<td>Đất nền</td>'+
+                            '</tr>'
+                        );
+                    });
+                    $("#details").append(items); 
+                });
+            }
+            function getUrlVar(key){
+                var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
+                return result && unescape(result[1]) || ""; 
+            }
+        </script>
 
 
         
