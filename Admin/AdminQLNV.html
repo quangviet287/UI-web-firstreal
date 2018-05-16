@@ -436,7 +436,7 @@
     <div id="editEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form id="formEditEmployee">
                     <div class="modal-header">
                         <h4 class="modal-title">Sửa nhân viên </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -480,7 +480,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-info" value="Lưu">
+                        <input type="submit" class="btn btn-info" onclick="editEmployee();" value="Lưu">
                     </div>
                 </form>
             </div>
@@ -543,11 +543,11 @@
                         item = (
                             '<div class="form-group">'+
                            ' <label>Mã nhân viên </label>'+
-                            '<input type="text" class="form-control" required minlength="3" maxlength="50" value="'+employees.employeeId+'">'+
+                            '<input type="text" name="employeeId" class="form-control" required minlength="3" maxlength="50" value="'+employees.employeeId+'">'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Tên nhân viên</label>'+
-                            '<input type="text " class="form-control" required minlength="3" value="'+employees.employeeName+'">'+
+                            '<input type="text" name="employeeName" class="form-control" required minlength="3" value="'+employees.employeeName+'">'+
                        ' </div>'+
                         '<div class="form-group">'+
                             '<label>Giới tính</label> <br>'+
@@ -556,23 +556,23 @@
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Số điện thoại</label>'+
-                            '<input type="text " class="form-control" required pattern="[0-9]{6,15}" title="Yêu cầu nhập số và tối thiểu 6 ký tự" value="'+employees.phoneNumber+'">'+
+                            '<input type="text " name="phoneNumber" class="form-control" required pattern="[0-9]{6,15}" title="Yêu cầu nhập số và tối thiểu 6 ký tự" value="'+employees.phoneNumber+'">'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Hình ảnh</label>'+
-                            '<input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                            '<input type="file" name="image" accept=".png,.jpg,.jpeg" class="form-control" required>'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Tên đăng nhập</label>'+
-                            '<input type="text " class="form-control" required minlength="3" maxlength="20" value="'+employees.userName+'">'+
+                            '<input type="text " name="userName" class="form-control" required minlength="3" maxlength="20" value="'+employees.userName+'">'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Mật khẩu</label>'+
-                            '<input type="text" class="form-control" required minlength="6" maxlength="10" value="'+employees.password+'">'+
+                            '<input type="text" name="password" class="form-control" required minlength="6" maxlength="10" value="'+employees.password+'">'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<label>Quyền</label>'+
-                            '<input type="text " class="form-control" required minlength="3" maxlength="10" value="'+employees.roleName+'">'+
+                            '<input type="text " name="roleName" class="form-control" required minlength="3" maxlength="10" value="'+employees.roleName+'">'+
                         '</div>'
                         );
                     });
@@ -616,6 +616,34 @@
                         alert("Delete success");
                     }
                 });
+            }
+            function editEmployee() {
+                var employeeId =getUrlVar('employeeId');
+                var formData = new FormData(document.getElementById('formEditEmployee'));
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("PATCH", 'http://localhost:8080/employee/update'+employeeId);
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                
+                var filesSelected = document.getElementById("image").files;
+                if (filesSelected.length > 0) {
+                  var fileToLoad = filesSelected[0];
+                  var fileReader = new FileReader();
+                  fileReader.onload = function(fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        xmlhttp.send(JSON.stringify({
+                        employeeName : formData.get("employeeName"),
+                        sex: formData.get("sex"),
+                        age: formData.get("age"),
+                        phoneNumber: formData.get("phoneNumber"),
+                        imageProfileUrl:{
+                            image: srcData.substring(23),
+                            type: "jpg"
+                            }
+                        }));
+                      fileReader.readAsDataURL(fileToLoad);
+                    }
+                    alert("success");
+                }
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 

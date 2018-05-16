@@ -285,11 +285,8 @@
                     </button>
                     <a class="navbar-brand" href="AdminQLDA.html"><img src="../assets/img/logo1.png" alt=""></a>
                 </div>
-
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
-                    
-
                     <ul class="main-nav nav navbar-nav navbar-right">
 
                         <li class="wow fadeInDown" data-wow-delay="0.1s" >
@@ -300,11 +297,6 @@
                         <li class="wow fadeInDown" data-wow-delay="0.1s" >
                             <a href="AdminThongKe.html" class="dropdown-toggle active" >Thống Kê</a>
                         </li>
-                        
-
-                        
-
-                 
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -318,55 +310,35 @@
                     <div class="col-sm-6">
                         <h2>Thống Kê  <b>Giao Dịch </b></h2>
                     </div>
-                    
                 </div>
             </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>
-                            
-
                         </th>
                         <th>Mã chi tiết dự án </th>
+                        <th>Ten chi tiet</th>
                         <th>Mã dự án</th>
                         <th>Tên dự án </th>
-                        <th>Địa chỉ</th>
-                        
-                        
-                       
-                        <th>Loại dự án</th>
-                        <th>Mã nhân viên</th>
+                        <th>Vi Tri</th>
+                        <th>Ten nhân viên</th>
                         <th>Hành động</th>
-                        
-
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="allDetailSold">
+                    <!-- <tr>
                         <td>
-                            
                         </td>
                         <td>ct001</td>
                         <td>da001</td>
-                        
                         <td>KĐT Nam Việt Á</td>
                         <td>Đà Nẵng</td>
-                        
-                        
-                       
                         <td>Đất nền</td>
                         <td>nv001</td>
                          <td>
-                            
                             <a href="ChiTietThongKe.html" class="btn btn-success" ><span>Xem chi tiết</span></a>
-                           
-
-                           
-                        
-                            
                         </td>
-                       
                     </tr>
                     <tr>
                         <td>
@@ -381,38 +353,14 @@
                         <td>Đất </td>
                         <td>nv002</td>
                         <td>
-                            
                             <a href="ChiTietThongKe.html" class="btn btn-success" ><span>Xem chi tiết</span></a>
-                           
-
-                           
-                        
-                            
                         </td>
-                                                 
-                       
-                    </tr>
-                    
-                    
-                    
+                    </tr> -->
                 </tbody>
             </table>
             
         </div>
     </div>
-        
-
-        
-
-        
-
-
-   
-      
-
-
-       
-
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
 
         <script src="../assets/js/jquery-1.10.2.min.js"></script>
@@ -430,12 +378,40 @@
         <script src="../assets/js/price-range.js"></script>
 
         <script src="../assets/js/main.js"></script>
-
-
-
-
-        
-
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 100,
+                    easingType: 'linear'
+                };
+                loadAllDetailSold();
+            });
+            function loadAllDetailSold() {
+                $.getJSON("http://localhost:8090/statistical/getAllSold", function (details) {
+                    var items[];
+                    console.log(details);
+                    $.each(details, function (index, details) {
+                        items.push(
+                            '<tr>'+
+                                '<td>'+
+                                '</td>'+
+                                '<td>'+details.projectDetailId+'</td>'+
+                                '<td>'+details.projectDetailName+'</td>'+
+                                '<td>'+details.projectId+'</td>'+
+                                '<td>'+details.projectName+'</td>'+
+                                '<td>'+details.location+'</td>'+
+                                '<td>'+details.employeeName+'</td>'+
+                                 '<td>'+
+                                    '<a href="ChiTietThongKe.html?projectDetailId=?'+details.projectDetailId+'" class="btn btn-success" ><span>Xem chi tiết</span></a>'+
+                                '</td>'+
+                            '</tr>'
+                        );
+                    });
+                    $("#allDetailSold").append(items); 
+                });
+            }
+        </script>
     </body>
 </html>

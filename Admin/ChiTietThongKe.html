@@ -300,11 +300,6 @@
                         <li class="wow fadeInDown" data-wow-delay="0.1s" >
                             <a href="AdminThongKe.html" class="dropdown-toggle active" >Thống Kê</a>
                         </li>
-                        
-
-                        
-
-                 
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -318,69 +313,35 @@
                     <div class="col-sm-6">
                         <h2>Chi Tiết  <b>Giao Dịch </b></h2>
                     </div>
-                    
                 </div>
             </div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>
-                            
-
                         </th>
-                        <th>Mã khách hàng</th> 
-                        <th>Tên khách hàng</th>
-                        
-                        <th>Ngày giao dịch</th>
-                        <th>Diện tích</th>
-                        <th>Giá</th>
-                        <th>Hướng</th>
-                        
-                           
-                    
-                        
-                        
-
+                        <th>Mã giao dich</th> 
+                        <th>Ma Chi Tiet Du An</th>
+                        <th>Ten khach hang</th>
+                        <th>Ten Nhan Vien</th>
+                        <th>Mgay Giao Dich</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="detailTransaction">
+                    <!-- <tr>
                         <td>
-                            
                         </td>
                         <td>kh001</td>
                         <td>Ngô Nhựt Đông</td>
                         <td>2018-05-07</td>
                         <td>500 m2</td>
                         <td>2 Tỷ 300 Triệu</td>
-                        <td>Tây Nam</td>
-                        
-                        
-                        
-                       
-                    </tr>
-                  
-                    
-                    
-                    
+                    </tr> -->
                 </tbody>
             </table>
             
         </div>
     </div>
-        
-
-        
-
-        
-
-
-   
-      
-
-
-       
-
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
 
         <script src="../assets/js/jquery-1.10.2.min.js"></script>
@@ -398,12 +359,42 @@
         <script src="../assets/js/price-range.js"></script>
 
         <script src="../assets/js/main.js"></script>
-
-
-
-
-        
-
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 100,
+                    easingType: 'linear'
+                };
+                loadTransactionDetailByProjectDetailId();
+            });
+            function loadTransactionDetailByProjectDetailId(){
+                var projectDetailId =getUrlVar('projectDetailId');
+                $.getJSON("http://localhost:8090/statistical/getInforTransaction/"+projectDetailId, function (detail) {
+                    var item;
+                    console.log(detail);
+                    var date = new Date(detail.dateCreate);
+                    $.each(detail, function (index, detail) {
+                        item = (
+                            '<tr>'+
+                                '<td>'+
+                                '</td>'+
+                                '<td>'+detail.transactionId+'</td>'+
+                                '<td>'+projectDetailId+'</td>'+
+                                '<td>'+detail.customerName+'</td>'+
+                                '<td>'+detail.employeeName+'</td>'+
+                                '<td>'+date+'</td>'+
+                             '</tr>'
+                        );
+                    });
+                    $("#detailTransaction").append(item); 
+                });
+            }
+            function getUrlVar(key){
+                var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
+                return result && unescape(result[1]) || ""; 
+            }            
+        </script>
     </body>
 </html>
