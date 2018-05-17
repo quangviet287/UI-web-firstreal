@@ -463,7 +463,7 @@
             function loadAllAdvisory(){
                 var age =getUrlVar('age');
                 var sex =getUrlVar('sex');
-                $.getJSON("http://localhost:8080/advisory/age="+age+"sex="+sex, function (details) {
+                $.getJSON("http://localhost:8080/advisory/"+age+"+"+sex, function (details) {
                     var items = [];
                     console.log(details);
                     $.each(details, function (index, details) {
@@ -478,7 +478,7 @@
                                         '<div class="dot-hr"></div>'+
                                         '<span class="pull-left"><b> Diện tích :</b> '+details.size+' </span>'+
                                         '<span class="proerty-price pull-right"> '+details.price+' tỷ</span>'+
-                                        '<a href="projectDetail.html"><input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
+                                        '<a href="property.html?projectDetailId='+details.projectDetailId+'&employeeId='+details.employeeId+'"><input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
                                     '</div>'+
                                 '</div>'+
                             '</div> '

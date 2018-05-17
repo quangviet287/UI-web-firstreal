@@ -448,15 +448,15 @@
                     easingType: 'linear'
                 };
                 loadAllSearch();
-                loadSearchByPrice();
-                loadSearchBySize();
-                loadSearchByDirection();
+                // loadSearchByPrice();
+                // loadSearchBySize();
+                // loadSearchByDirection();
             });
             function loadAllSearch(){
                 var size =getUrlVar('size');
                 var price =getUrlVar('price');
                 var direction = getUrlVar('direction');
-                $.getJSON("http://localhost:8080/search/size="+size+"+age="+age+"+direction="+direction, function (details) {
+                $.getJSON("http://localhost:8080/search/bySizeDirectionPrice/"+size+"+"+direction+"+"+price, function (details) {
                     var items = [];
                     console.log(details);
                     $.each(details, function (index, details) {
@@ -471,7 +471,7 @@
                                         '<div class="dot-hr"></div>'+
                                         '<span class="pull-left"><b> Diện tích :</b> '+details.size+' </span>'+
                                         '<span class="proerty-price pull-right"> '+details.price+' tỷ</span>'+
-                                        '<a href="projectDetail.html"><input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
+                                        '<a href="property.html?projectDetailId='+details.projectDetailId+'&employeeId='+details.employeeId+'"><input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
                                     '</div>'+
                                 '</div>'+
                             '</div> '
@@ -483,7 +483,7 @@
             }
             function loadSearchBySize(){
                 var size =getUrlVar('size');
-                $.getJSON("http://localhost:8080/search/size="+size+, function (details) {
+                $.getJSON("http://localhost:8080/search/size="+size, function (details) {
                     var items = [];
                     console.log(details);
                     $.each(details, function (index, details) {

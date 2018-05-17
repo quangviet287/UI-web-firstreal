@@ -307,9 +307,7 @@
                         <h2>Quản Lý <b>Dự Án </b></h2>
                     </div>
                     <div class="col-sm-6">
-                       
-                        <a href="#editEmployeeModal" class="btn btn-info" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Sửa </span></a>
-                        <a href="#addProjectModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>
+                        <a href="ThemMoiDA.html" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>
                     </div>
                 </div>
             </div>
@@ -509,7 +507,7 @@
                     scrollSpeed: 100,
                     easingType: 'linear'
                 };
-                //loadAllProject();
+                loadAllProject();
             });
             function loadAllProject(){
                     $.getJSON("http://localhost:8080/project/getAll", function (projects) {
@@ -526,43 +524,14 @@
                                     '<td>'+projects.projectTypeName+'</td>'+
                                     '<td>'+
                                         '<a href="AdminChiTietDA.html?projectId='+projects.projectId+'" class="btn btn-success" style="width: 80px"><span>Xem</span></a><br><br>'+
-                                        '<a href="#deleteEmployeeModal" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a>'+
+                                        '<a href="#deleteEmployeeModal" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a><br><br>'+
+                                        '<a href="SuaDA.html?projectId='+projects.projectId+'" class="btn btn-info" style="width: 80px"><span>Sửa</span></a>'+
                                     '</td>'+
                                 '</tr>'
                             );
                         });
                         $("#allProjects").append(items); 
                     });
-            }
-            function createProject(){
-                var formData = new FormData(document.getElementById('projectFormCreate'));
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", 'http://localhost:8080/project/create');
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                var e = document.getElementById("formAddress");
-                var addressId = e.options[e.selectedIndex].value;
-                var f = document.getElementById("formTypeProject");
-                var projectTypeId = f.options[f.selectedIndex].value;
-                var filesSelected = document.getElementById("imageProject").files;
-                if (filesSelected.length > 0) {
-                  var fileToLoad = filesSelected[0];
-                  var fileReader = new FileReader();
-                  fileReader.onload = function(fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        xmlhttp.send(JSON.stringify({
-                        projectName : formData.get("projectName"),
-                        addressId: addressId,
-                        description: formData.get("description"),
-                        image:{
-                            image: srcData.substring(23),
-                            type: "jpg"
-                            },
-                        projectTypeId: projectTypeId
-                        }));
-                      fileReader.readAsDataURL(fileToLoad);
-                    }
-                    alert("hello");
-                }
             }
         </script>
     </body>

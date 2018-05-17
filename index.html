@@ -159,39 +159,46 @@
 
                             <form method="GET" action="resultSearch.html" class=" form-inline">
                                 <div class="form-group">
-                                    <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Chọn địa điểm ">
-
-                                        <option>Đà Nẵng </option>
-                                        <option>Hà Nội</option>
-                                        <option>TP.Hồ Chí Minh</option>
-                                        <option>Quảng Nam</option>
-                                        <option>Huế</option>
-                                        <option>Nha Trang </option>
+                                    <select id="basic" name="direction" class="selectpicker show-tick form-control" >
+                                        <option> - Chọn hướng - </option>
+                                        <option value="Dong">Đông </option>
+                                        <option value="Tay">Tây</option> 
+                                        <option value="Nam">Nam </option>
+                                        <option value="Bac">Bắc </option>
+                                        <option value="Dong Nam">Đông - Nam </option>
+                                        <option value="Dong Bac">Đông - Bắc </option>
+                                        <option value="Tay Nam">Tây - Nam </option>
+                                        <option value="Tay Bac">Tây - Bắc </option>
                                     </select>
-                                </div>
-                                <br>
-                                
-                                <br>
+                                </div><br><br>
+                                 <div class="form-group">
+                                    <select id="basic" name="price" class="selectpicker show-tick form-control" >
+                                        <option selected="">- Giá cao nhất -</option>
+                                                        <option value="0.5" >  500 triệu</option>
+                                                        <option value="0.8" > 800 triệu</option>
+                                                        <option value="1">  1 tỷ</option>
+                                                        <option value="2">  2 tỷ</option>
+                                                        <option value="3">  3 tỷ</option>
+                                                        <option value="5"> 5 tỷ </option>
+                                                        <option value="7">  7 tỷ</option>
+                                                        <option value="10">  10 tỷ </option>
+                                                        <option value="15"> 15 tỷ</option>
+                                                        <option value="30"> 30 tỷ </option>
+                                    </select>
+                                </div><br><br>
                                 <div class="form-group">
-                                    <select id="basic" class="selectpicker show-tick form-control" >
-                                        <option> - Loại nhà đất - </option>
-                                        <option>Đất nền phân lô </option>
-                                        <option>Chung cư căn hộ</option>
-                                        <option>Cao ốc văn phòng </option>
-                                        <option>Nhà phố biệt thự</option>
-
-
+                                    <select id="basic" name="size" class="selectpicker show-tick form-control" >
+                                        <option selected="">- Diện tích cao nhất -</option>
+                                                        <option value="100"> 100 m2</option>
+                                                        <option value="150"> 150 m2</option>
+                                                        <option value="200"> 200 m2</option>
+                                                        <option value="250"> 250 m2</option>
                                     </select>
                                 </div><br><br>
                                 <button class="btn search-btn" type="submit" style="width:120px">
                                 <i class="fa fa-search"></i>
-									Tìm Kiếm
+                                    Tìm Kiếm
                                 </button>
-                                
-                                    
-
-
-
                             </form>
                         </div>
                         <div class="search-form wow pulse" data-wow-delay="0.8s" style="width: 400px; float: right;top: 50px;background: rgba(64,64,64,.6); ">

@@ -389,8 +389,8 @@
                 loadAllDetailSold();
             });
             function loadAllDetailSold() {
-                $.getJSON("http://localhost:8090/statistical/getAllSold", function (details) {
-                    var items[];
+                $.getJSON("http://localhost:8080/statistical/getAllSold", function (details) {
+                    var items = [];
                     console.log(details);
                     $.each(details, function (index, details) {
                         items.push(
@@ -404,7 +404,7 @@
                                 '<td>'+details.location+'</td>'+
                                 '<td>'+details.employeeName+'</td>'+
                                  '<td>'+
-                                    '<a href="ChiTietThongKe.html?projectDetailId=?'+details.projectDetailId+'" class="btn btn-success" ><span>Xem chi tiết</span></a>'+
+                                    '<a href="ChiTietThongKe.html?projectDetailId='+details.projectDetailId+'" class="btn btn-success" ><span>Xem chi tiết</span></a>'+
                                 '</td>'+
                             '</tr>'
                         );

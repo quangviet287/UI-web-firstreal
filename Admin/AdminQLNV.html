@@ -318,7 +318,7 @@
                         <h2>Quản Lý <b>Nhân Viên </b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>
+                        <a href="ThemNhanVien.html" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>
                         
                     </div>
                 </div>
@@ -532,55 +532,11 @@
                     easingType: 'linear'
                 };
                 loadAllEmployee();
-                loadOneEmployee();
+                
             });
-            function loadOneEmployee() {
-                var employeeId =getUrlVar('employeeId');
-                $.getJSON("http://localhost:8090/employee/getOne/"+employeeId, function (employees) {
-                    var item;
-                    console.log(employees);
-                    $.each(employees, function (index, employees) {
-                        item = (
-                            '<div class="form-group">'+
-                           ' <label>Mã nhân viên </label>'+
-                            '<input type="text" name="employeeId" class="form-control" required minlength="3" maxlength="50" value="'+employees.employeeId+'">'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Tên nhân viên</label>'+
-                            '<input type="text" name="employeeName" class="form-control" required minlength="3" value="'+employees.employeeName+'">'+
-                       ' </div>'+
-                        '<div class="form-group">'+
-                            '<label>Giới tính</label> <br>'+
-                            '<input type="radio" name="sex" value="nam" checked=""> Nam'+
-                            '<input type="radio" name="sex" value="nu"> Nữ'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Số điện thoại</label>'+
-                            '<input type="text " name="phoneNumber" class="form-control" required pattern="[0-9]{6,15}" title="Yêu cầu nhập số và tối thiểu 6 ký tự" value="'+employees.phoneNumber+'">'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Hình ảnh</label>'+
-                            '<input type="file" name="image" accept=".png,.jpg,.jpeg" class="form-control" required>'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Tên đăng nhập</label>'+
-                            '<input type="text " name="userName" class="form-control" required minlength="3" maxlength="20" value="'+employees.userName+'">'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Mật khẩu</label>'+
-                            '<input type="text" name="password" class="form-control" required minlength="6" maxlength="10" value="'+employees.password+'">'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label>Quyền</label>'+
-                            '<input type="text " name="roleName" class="form-control" required minlength="3" maxlength="10" value="'+employees.roleName+'">'+
-                        '</div>'
-                        );
-                    });
-                    $("#editEmployee").append(item); 
-                });
-            }
+            
             function loadAllEmployee(){
-                $.getJSON("http://localhost:8090/employee/getAll", function (employees) {
+                $.getJSON("http://localhost:8080/employee/getAll", function (employees) {
                     var items = [];
                     console.log(employees);
                     $.each(employees, function (index, employees) {
@@ -597,7 +553,7 @@
                                 '<td>'+employees.password+'</td>'+
                                 '<td>'+employees.roleName+'</td>'+
                                 '<td>'+
-                                    '<a href="#editEmployeeModal?employeeId='+employees.employeeId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Sửa">&#xE254;</i></a>'+
+                                    '<a href="SuaNhanVien.html?employeeId='+employees.employeeId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Sửa">&#xE254;</i></a>'+
                                     '<a href="#deleteEmployeeModa?lemployeeId='+employees.employeeId+'" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Xoá">&#xE872;</i></a>'+
                                 '</td>'+
                             '</tr>'
