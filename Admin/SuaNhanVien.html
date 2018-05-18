@@ -438,10 +438,11 @@
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Quyền</label>'+
-                                    '<input type="text " name="roleName" class="form-control" required minlength="3" maxlength="10" value="'+roleName+'">'+
+                                    '<input type="text " name="roleName" class="form-control" required minlength="3" maxlength="10" value="'+roleName+'" disabled>'+
                                 '</div>'+
                                 '</div>'+
                             '<div class="modal-footer">'+
+                                '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminQLNV.html" value="Huỷ bỏ"><br><br>'+
                                 '<input type="submit" class="btn btn-info" onclick="update();" value="Lưu">'+
                             '</div>'
                         );
@@ -450,18 +451,39 @@
                 });
             }
             function update(){
-                alert("Nhớ Linh");
+                var employeeId =getUrlVar('employeeId');
+                var formData = new FormData(document.getElementById('projectFormCreate'));
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("PATCH", 'http://localhost:8080/project/create');
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                var filesSelected = document.getElementById("imageProject").files;
+                if (filesSelected.length > 0) {
+                  var fileToLoad = filesSelected[0];
+                  var fileReader = new FileReader();
+                  fileReader.onload = function(fileLoadedEvent) {
+                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                        xmlhttp.send(JSON.stringify({
+                        employeeName: formData.get('employeeName'),
+                        sex: formData.get('sex'),
+                        phoneNumber: formData.get('phoneNumber'),
+                        image:{
+                            image: srcData.substring(23),
+                            type: "jpg"
+                            },
+                       
+                        },
+                        userName: formData.get('userName'),
+                        password: formData.get('password')
+
+                        ));
+                      fileReader.readAsDataURL(fileToLoad);
+                   }
+                }
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
                 return result && unescape(result[1]) || ""; 
             }
         </script>
-
-
-
-        
-
-
     </body>
 </html>

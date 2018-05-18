@@ -293,15 +293,9 @@
                     <ul class="main-nav nav navbar-nav navbar-right">
 
                         <li class="wow fadeInDown" data-wow-delay="0.1s" >
-                            <a href="employee.html" class="dropdown-toggle active" >Trang Chủ</a>
+                            <a href="index.html" class="dropdown-toggle active" >Trang Chủ</a>
                         </li>
-                        
-                        <li class="wow fadeInDown" data-wow-delay="0.3s"><a class="" href="NhanVienThongKe.html">Thống Kê    </a></li>
-                        
-
-                        
-
-                 
+                        <li id="Welcome" class="wow fadeInDown" data-wow-delay="0.1s" >
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -312,8 +306,8 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Thống Kê  <b>Giao Dịch Cua Nhan Vien </b></h2>
+                    <div id="employeeName" class="col-sm-6">
+                        <!-- <h2>Thống Kê  <b>Giao Dịch Cua Nhan Vien </b></h2> -->
                     </div>
                     
                 </div>
@@ -323,14 +317,13 @@
                     <tr>
                         <th>
                         </th>
-                        <th>Mã dự án </th>
-                        <th>Mã chi tiết dự án</th>
+                        <th>Mã chi tiết dự án </th>
+                        <th>Ten chi tiet</th>
+                        <th>Mã dự án</th>
                         <th>Tên dự án </th>
-                        <th>Địa chỉ</th>
-                        <th>Diện tích</th>
-                        <th>Giá</th>
-                        <th>Hướng</th>
-                        <th>Loại dự án</th>
+                        <th>Vi Tri</th>
+                        <th>Ten nhân viên</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody id="details">
@@ -380,7 +373,6 @@
         <script src="assets/js/price-range.js"></script>
 
         <script src="assets/js/main.js"></script>
-        <script src="assets/js/app.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -393,39 +385,42 @@
                 loadAllDetailSoldByEmployee();
             });
             function loadAllDetailSoldByEmployee(){
-                var employeeId =getUrlVar('employeeId');
+                var employeeName =getUrlVar('employeeName');
                 //alert(projectId);
-                $.getJSON("http://localhost:8080/statistical/getAllSoldByEmployee/"+projectId, function (detail) {
+                $.getJSON("http://localhost:8080/statistical/getAllSoldByEmployee/"+employeeName, function (detail) {
                     console.log(detail);
                     var items = [];
                     $.each(detail, function (index, detail) {
                         items.push(
                            '<tr>'+
-                            '<td>'+
-                            '</td>'+
-                            '<td>'+detail.projectlId+'</td>'+
-                            '<td>'+detail.projectDetailId+'</td>'+
-                            '<td>'+detail.projectName+'</td>'+
-                            '<td>'+detail.address+'</td>'+
-                            '<td>'+detail.size+'</td>'+
-                            '<td>2 Tỷ 300 Triệu</td>'+
-                            '<td>Tây Nam</td>'+
-                            '<td>Đất nền</td>'+
+                                '<td>'+
+                                '</td>'+
+                                '<td>'+details.projectDetailId+'</td>'+
+                                '<td>'+details.projectDetailName+'</td>'+
+                                '<td>'+details.projectId+'</td>'+
+                                '<td>'+details.projectName+'</td>'+
+                                '<td>'+details.location+'</td>'+
+                                '<td>'+details.employeeName+'</td>'+
+                                 '<td>'+
+                                    '<a href="ChiTietThongKeNhanVien.html?projectDetailId='+details.projectDetailId+'" class="btn btn-success" ><span>Xem chi tiết</span></a>'+
+                                '</td>'+
                             '</tr>'
                         );
                     });
                     $("#details").append(items); 
                 });
+
+                var loademployeeName = ('<h2><b>Thống Kê Giao Dịch Cua Nhan Vien: </b>'+employeeName+'</h2>');
+                $("#employeeName").append(loademployeeName);
+                var item=(
+                        '<a href="#" class="dropdown-toggle active">Welcome, '+employeeName+'</a>'
+                    );
+                $("#Welcome").append(item); 
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
                 return result && unescape(result[1]) || ""; 
             }
         </script>
-
-
-        
-
-
     </body>
 </html>

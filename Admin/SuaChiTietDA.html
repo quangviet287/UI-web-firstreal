@@ -288,99 +288,61 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
-                    
-
                     <ul class="main-nav nav navbar-nav navbar-right">
-
                         <li class="wow fadeInDown" data-wow-delay="0.1s" >
                             <a href="AdminQLDA.html" class="dropdown-toggle active" >Quản Lý Dự Án </a>
                         </li>
                         <li class="wow fadeInDown" data-wow-delay="0.3s"><a class="" href="AdminQLNV.html">Quản Lý Nhân Viên   </a></li>
                         <li class="wow fadeInDown" data-wow-delay="0.3s"><a class="" href="AdminThongKe.html">Thống Kê    </a></li>
-                        
-                        
-
-                        
-
-                 
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
         <!-- End of nav bar -->
         <div class="container">
-            <form>
-                    <div class="modal-header">
-                        <h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>
+            <form id="detail">
+                <!-- <div class="modal-header">
+                    <h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Mã chi tiết dự án </label>
+                        <input type="text" class="form-control" required maxlength="20" minlength="3" disabled>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Mã chi tiết dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Tên dự án</label>
-                            <input type="text " class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ  </label>
-                            <select id="basic" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
-                                        <option>Đà Nẵng </option>
-                                        <option>Quảng Nam</option>
-                                        <option>Huế </option>
-                                    </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Diện tích</label>
-                            <input type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Giá</label>
-                            <input type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Hướng</label>
-                            <input type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Tình trạng</label><br>
-                            <input type="radio" name="state"> True
-                            <input type="radio" name="state" checked=""> False
-                            
-                        </div>
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea class="form-control" required style="height: 150px" minlength="6"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                        <label>Loại dự án</label>
-                                    <select id="basic" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
-                                        <option>Đất nền phân lô </option>
-                                        <option>Chung cư căn hộ</option>
-                                        <option>Cao ốc văn phòng </option>
-                                        <option>Nhà phố biệt thự</option>
-
-
-                                    </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Mã nhân viên</label>
-                            <input type="text " class="form-control" required minlength="3" maxlength="10">
-                        </div>
-
+                    <div class="form-group">
+                        <label>Tên Chi Tieest dự án</label>
+                        <input name="projectDetailName" type="text " class="form-control" required minlength="3" >
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-info" value="Lưu">
+                    <div class="form-group">
+                        <label>Diện tích</label>
+                        <input name="size" type="text " class="form-control" required minlength="3">
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input name="price" type="text " class="form-control" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label>Hướng</label>
+                        <input name="direction" type="text " class="form-control" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label>Hình ảnh</label>
+                        <input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã nhân viên</label>
+                        <input name="employeeId" type="text " class="form-control" required minlength="3" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Vi Tri</label>
+                        <input name="location" type="text " class="form-control" required minlength="3" maxlength="10">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
+                    <input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
+                </div> -->
+            </form>
 
        
     </div>
@@ -402,12 +364,78 @@
         <script src="../assets/js/price-range.js"></script>
 
         <script src="../assets/js/main.js"></script>
-
-
-
-
-        
-
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 100,
+                    easingType: 'linear'
+                };
+                loadDetail();
+                
+            });
+            function loadDetail(argument) {
+                var projectDetailId =getUrlVar('projectDetailId');
+                $.getJSON("http://localhost:8080/detail/getOne/"+projectDetailId, function (detail) {
+                    var detailName = detail.projectDetailName;
+                    var size = detail.size;
+                    var price = detail.price;
+                    var direction = detail.direction;
+                    var location = detail.location;
+                    var employeeId = detail.employeeId;
+                    var item = (
+                        '<div class="modal-header">'+
+                            '<h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>'+
+                        '</div>'+
+                        '<div class="modal-body">'+
+                            '<div class="form-group">'+
+                                '<label>Mã chi tiết dự án </label>'+
+                                '<input type="text" class="form-control" value="'+projectDetailId+'" required maxlength="20" minlength="3" disabled>'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Tên Chi Tieest dự án</label>'+
+                                '<input name="projectDetailName" value="'+detailName+'" type="text " class="form-control" required minlength="3" >'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Diện tích</label>'+
+                                '<input name="size" type="text" value="'+size+'" class="form-control" required minlength="3">'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Giá</label>'+
+                                '<input name="price" type="text" value="'+price+'" class="form-control" required minlength="3">'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Hướng</label>'+
+                                '<input name="direction" type="text " value="'+direction+'" class="form-control" required minlength="3">'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Hình ảnh</label>'+
+                                '<input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Mã nhân viên</label'>+
+                                '<input name="employeeId" type="text" value="'+employeeId+'" class="form-control" required minlength="3" maxlength="10">'+
+                            '</div>'+
+                            '<div class="form-group">'+
+                                '<label>Vi Tri</label>'+
+                                '<input name="location" type="text" value="'+location+'" class="form-control" required minlength="3" maxlength="10">'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="modal-footer">'+
+                            '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminChiTietDA.html" value="Huỷ bỏ"><br><br>'+
+                            '<input type="submit" onclick="update();" class="btn btn-success" value="Cap Nhat">'+
+                        '</div>'
+                    );
+                }
+            }     
+            function update(argument) {
+                
+            }
+            function getUrlVar(key){
+                var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
+                return result && unescape(result[1]) || ""; 
+            }       
+        </script>
     </body>
 </html>

@@ -160,7 +160,7 @@
                     <div class="box-for overflow" >
                         <div class="col-md-12 col-xs-12 login-blocks">
                             <h2>Đăng nhập : </h2>
-                            <form action="customer.html" id="formLogin">
+                            <form id="formLogin">
                                 <div class="form-group">
                                     <label for="username">Tên đăng nhập</label>
                                     <input type="text" class="form-control" name="username" required minlength="3" maxlength="20">
@@ -268,13 +268,6 @@
             function login(){
                 var projectDetailId =getUrlVar('projectDetailId');
                 var formData = new FormData(document.getElementById('formLogin'));
-                /*var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", 'http://localhost:8080/login');
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                xmlhttp.send(JSON.stringify({
-                    username: formData.get("username"),
-                    password: formData.get("password")
-                }));*/
                 var data=
                     JSON.stringify({
                     username: formData.get("username"),
@@ -282,7 +275,6 @@
                     projectDetailId: projectDetailId
                     });
                 console.log(data);
-                //var dataString = $("#formLogin").serialize();
                 $.ajax({
                     type: "post",
                     url: "http://localhost:8080/login",
@@ -292,7 +284,7 @@
                     success: function(response){
                                 console.log(response);
                                 alert("Login success");
-                //                window.open("customer.html?projectDetailId="+projectDetailId);
+                                window.location.reload('customer.html');
                             },
                     error: function(response){
                         alert("Invalid username or password");
