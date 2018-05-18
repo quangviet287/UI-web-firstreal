@@ -342,9 +342,9 @@
                     <div class="col-sm-6">
                         <h2>Thông Tin <b>Dự Án </b></h2>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Xoá </span></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <table class="table table-striped table-hover">
@@ -421,18 +421,18 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form id="deleteDetail">
                     <div class="modal-header">
                         <h4 class="modal-title">Xoá dự án </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>Bạn có chắc chắn muốn xoá dự án này?</p>
-
+                        <p>Bạn có chắc chắn muốn xoá chi tiet dự án này?</p>
+                        <input type="text" name="bookId" value="" type="hidden" />
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-danger" value="Xoá">
+                        <input type="submit" onclick="deleteDetail();" class="btn btn-danger" value="Xoá">
                     </div>
                 </form>
             </div>
@@ -468,6 +468,25 @@
                 loadInforProject();
                 loadAllDetailByproject();
             });
+            function deleteDetail() {
+                var formData = document.getElementById("deleteDetail");
+                var projectDetailId = formData.elements["bookId"].value;
+                $.ajax({
+                        type: "delete",
+                        url: "http://localhost:8080/detail/delete/"+projectDetailId,
+                        contentType: "application/json",
+                        data:data,
+                        success: function(response){
+                                    //console.log(response);
+                                    alert("Delete success");
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            alert("Failllllllll");
+                            location.reload();
+                        }
+                    })
+            }
             function loadAllDetailByproject(){
                 var projectId =getUrlVar('projectId');
                 //alert(projectId);
@@ -488,12 +507,16 @@
                                 '<td>'+detail.employeeId+'</td>'+
                                 '<td>'+
                                     '<a href="#editEmployeeModal?projectDetailId='+detail.projectDetailId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>'+
-                                    '<a href="#deleteEmployeeModal?projectDetailId='+detail.projectDetailId+'" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>'+
+                                    '<a href="#deleteEmployeeModal" data-book-id="'+detail.projectDetailId+'" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>'+
                                 '</td>'+
                             '</tr>'     
                         );
                     });
                     $("#detailsByProject").append(items); 
+                });
+                $('#deleteEmployeeModal').on('show.bs.modal', function(e) {
+                    var bookId = $(e.relatedTarget).data('book-id');
+                    $(e.currentTarget).find('input[name="bookId"]').val(bookId);
                 });
             }
             function loadInforProject(){
