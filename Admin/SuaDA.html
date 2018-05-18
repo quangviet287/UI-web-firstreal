@@ -459,7 +459,45 @@
                 });
             }
             function update(){
-                alert("Nhớ Linh");
+                var projectId = getUrlVar('projectId');
+                var formData = document.getElementById("project");
+                var filesSelected = document.getElementById("image").files;
+                if (filesSelected.length > 0) {
+                  var fileToLoad = filesSelected[0];
+
+                  var fileReader = new FileReader();
+
+                  fileReader.onload = function(fileLoadedEvent) {
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                    var data = JSON.stringify({
+                        projectName: formData.elements["projectName"].value,
+                        address: formData.elements["formAddress"].value,
+                        imageUrl : {
+                            image: srcData.substring(23),
+                            type: "jpg"
+                        },
+                        description: formData.elements["description"].value,
+                        projectTypeId: formData.elements["formTypeProject"].value
+                    });
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/project/create",
+                        contentType: "application/json",
+                        //dataType: "json",
+                        data:data,
+                        success: function(response){
+                                    //console.log(response);
+                                    alert("Submit success");
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            alert("Failllllllll");
+                            location.reload();
+                        }
+                    })
+                  }
+                  fileReader.readAsDataURL(fileToLoad);
+                }
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 

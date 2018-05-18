@@ -452,32 +452,45 @@
             }
             function update(){
                 var employeeId =getUrlVar('employeeId');
-                var formData = new FormData(document.getElementById('projectFormCreate'));
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("PATCH", 'http://localhost:8080/project/create');
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                var filesSelected = document.getElementById("imageProject").files;
+                var formData = document.getElementById("employee");
+                var filesSelected = document.getElementById("image").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
+
                   var fileReader = new FileReader();
+
                   fileReader.onload = function(fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        xmlhttp.send(JSON.stringify({
-                        employeeName: formData.get('employeeName'),
-                        sex: formData.get('sex'),
-                        phoneNumber: formData.get('phoneNumber'),
-                        image:{
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                    var data = JSON.stringify({
+                        employeeName: formData.elements["employeeName"].value,
+                        sex: formData.elements["sex"].value,
+                        phoneNumber: formData.elements["phoneNumber"].value,
+                        imageUrl : {
                             image: srcData.substring(23),
                             type: "jpg"
-                            },
-                       
                         },
-                        userName: formData.get('userName'),
-                        password: formData.get('password')
-
-                        ));
-                      fileReader.readAsDataURL(fileToLoad);
-                   }
+                        userName: formData.elements["userName"].value,
+                        password: formData.elements["password"].value,
+                        roleId: formData.elements["role"].value
+                    });
+                    $.ajax({
+                        type: "patch",
+                        url: "http://localhost:8080/employee/update"+employeeId,
+                        contentType: "application/json",
+                        //dataType: "json",
+                        data:data,
+                        success: function(response){
+                                    //console.log(response);
+                                    alert("Submit success");
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            alert("Failllllllll");
+                            location.reload();
+                        }
+                    })
+                  }
+                  fileReader.readAsDataURL(fileToLoad);
                 }
             }
             function getUrlVar(key){

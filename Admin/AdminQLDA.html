@@ -353,114 +353,6 @@
             
         </div>
     </div>
-    <!-- Edit Modal HTML -->
-    <div id="addProjectModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="projectFormCreate">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Thêm mới dự án</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- <div class="form-group">
-                            <label>Mã dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div> -->
-                        <div class="form-group">
-                            <label>Tên dự án</label>
-                            <input type="text " name="projectName" class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ  </label><br>
-                            <select id="formAddress"  required  style="width: 100%;height:35px">
-                                        <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
-                                        <option value="A1">Đà Nẵng </option>
-                                        <option value="A2">Quảng Nam</option>
-                                        <option value="A3">Huế </option>
-                                    </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input id="imageProject" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea name="description" class="form-control" required style="height: 150px" minlength="6"></textarea>
-                        </div>
-                        <div class="form-group">
-                        <label>Loại dự án</label>
-                                    <select id="formTypeProject" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
-                                        <option value="PT1">Đất nền phân lô </option>
-                                        <option value="PT2">Chung cư căn hộ</option>
-                                        <option value="PT3">Cao ốc văn phòng </option>
-                                        <option value="PT4">Nhà phố biệt thự</option>
-                                    </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"> <br><br>
-                        <input type="submit" class="btn btn-success" onclick="createProject();" value="Thêm mới">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Sửa dự án</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Mã dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Tên dự án</label>
-                            <input type="text " class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ  </label>
-                                <select style="width: 100%;height:35px" id="basic"  required >
-                                        <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
-                                        <option>Đà Nẵng </option>
-                                        <option>Quảng Nam</option>
-                                        <option>Huế </option>
-                                </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea class="form-control" required style="height: 150px" minlength="6"></textarea>
-                        </div>
-                        <div class="form-group">
-                        <label>Loại dự án</label>
-                                    <select id="basic" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
-                                        <option>Đất nền phân lô </option>
-                                        <option>Chung cư căn hộ</option>
-                                        <option>Cao ốc văn phòng </option>
-                                        <option>Nhà phố biệt thự</option>
-                                    </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-info" value="Lưu">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- Delete Modal HTML -->
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
@@ -510,28 +402,28 @@
                 loadAllProject();
             });
             function loadAllProject(){
-                    $.getJSON("http://localhost:8080/project/getAll", function (projects) {
-                        var items = [];
-                        console.log(projects);
-                        $.each(projects, function (index, projects) {
-                            items.push(
-                                '<tr>'+
-                                    '<td>'+
-                                    '</td>'+
-                                    '<td>'+projects.projectId+'</td>'+
-                                    '<td>'+projects.projectName+'</td>'+
-                                    '<td>'+projects.addressName+'</td>'+
-                                    '<td>'+projects.projectTypeName+'</td>'+
-                                    '<td>'+
-                                        '<a href="AdminChiTietDA.html?projectId='+projects.projectId+'" class="btn btn-success" style="width: 80px"><span>Xem</span></a><br><br>'+
-                                        '<a href="#deleteEmployeeModal" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a><br><br>'+
-                                        '<a href="SuaDA.html?projectId='+projects.projectId+'" class="btn btn-info" style="width: 80px"><span>Sửa</span></a>'+
-                                    '</td>'+
-                                '</tr>'
-                            );
-                        });
-                        $("#allProjects").append(items); 
+                $.getJSON("http://localhost:8080/project/getAll", function (projects) {
+                    var items = [];
+                    console.log(projects);
+                    $.each(projects, function (index, projects) {
+                        items.push(
+                            '<tr>'+
+                                '<td>'+
+                                '</td>'+
+                                '<td>'+projects.projectId+'</td>'+
+                                '<td>'+projects.projectName+'</td>'+
+                                '<td>'+projects.addressName+'</td>'+
+                                '<td>'+projects.projectTypeName+'</td>'+
+                                '<td>'+
+                                    '<a href="AdminChiTietDA.html?projectId='+projects.projectId+'" class="btn btn-success" style="width: 80px"><span>Xem</span></a><br><br>'+
+                                    '<a href="#deleteEmployeeModal" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a><br><br>'+
+                                    '<a href="SuaDA.html?projectId='+projects.projectId+'" class="btn btn-info" style="width: 80px"><span>Sửa</span></a>'+
+                                '</td>'+
+                            '</tr>'
+                        );
                     });
+                    $("#allProjects").append(items); 
+                });
             }
         </script>
     </body>

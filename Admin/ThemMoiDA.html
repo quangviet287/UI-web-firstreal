@@ -304,53 +304,53 @@
         <!-- End of nav bar -->
         <div class="container">
             <form id="projectFormCreate">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Thêm mới dự án</h4>
-                       <!--      -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới dự án</h4>
+                   <!--      -->
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="form-group">
+                        <label>Mã dự án </label>
+                        <input type="text" class="form-control" required maxlength="10" minlength="3">
+                    </div> -->
+                    <div class="form-group">
+                        <label>Tên dự án</label>
+                        <input type="text " name="projectName" class="form-control" required minlength="3" >
                     </div>
-                    <div class="modal-body">
-                        <!-- <div class="form-group">
-                            <label>Mã dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div> -->
-                        <div class="form-group">
-                            <label>Tên dự án</label>
-                            <input type="text " name="projectName" class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ  </label><br>
-                            <select id="formAddress"  required  style="width: 100%;height:35px">
-                                        <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
-                                        <option value="A1">Đà Nẵng </option>
-                                        <option value="A2">Quảng Nam</option>
-                                        <option value="A3">Huế </option>
-                                    </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input id="imageProject" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea name="description" class="form-control" required style="height: 150px" minlength="6"></textarea>
-                        </div>
-                        <div class="form-group">
-                        <label>Loại dự án</label>
-                                    <select id="formTypeProject" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
-                                        <option value="PT1">Đất nền phân lô </option>
-                                        <option value="PT2">Chung cư căn hộ</option>
-                                        <option value="PT3">Cao ốc văn phòng </option>
-                                        <option value="PT4">Nhà phố biệt thự</option>
-                                    </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Địa chỉ  </label><br>
+                        <select id="formAddress"  required  style="width: 100%;height:35px">
+                                    <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
+                                    <option value="A1">Đà Nẵng </option>
+                                    <option value="A2">Quảng Nam</option>
+                                    <option value="A3">Huế </option>
+                                </select>
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"> <br><br>
-                        <input type="submit" class="btn btn-success" onclick="createProject();" value="Thêm mới">
+                    <div class="form-group">
+                        <label>Hình ảnh</label>
+                        <input id="imageProject" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
                     </div>
-                </form>
-    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea name="description" class="form-control" required style="height: 150px" minlength="6"></textarea>
+                    </div>
+                    <div class="form-group">
+                    <label>Loại dự án</label>
+                                <select id="formTypeProject" style="width: 100%;height:35px" required >
+                                    <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
+                                    <option value="PT1">Đất nền phân lô </option>
+                                    <option value="PT2">Chung cư căn hộ</option>
+                                    <option value="PT3">Cao ốc văn phòng </option>
+                                    <option value="PT4">Nhà phố biệt thự</option>
+                                </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"> <br><br>
+                    <input type="submit" class="btn btn-success" onclick="createProject();" value="Thêm mới">
+                </div>
+            </form>
+        </div>
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
         <script src="../assets/js/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -365,45 +365,43 @@
         <script src="../assets/js/main.js"></script>
         <script type="text/javascript">
             function createProject(){
-                var formData = new FormData(document.getElementById('projectFormCreate'));
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", 'http://localhost:8080/project/create');
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                var e = document.getElementById("formAddress");
-                var addressId = e.options[e.selectedIndex].value;
-                var f = document.getElementById("formTypeProject");
-                var projectTypeId = f.options[f.selectedIndex].value;
-                
-                var filesSelected = document.getElementById("imageProject").files;
-                alert(addressId+projectTypeId);
+                var formData = document.getElementById("projectFormCreate");
+                var filesSelected = document.getElementById("image").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
+
                   var fileReader = new FileReader();
+
                   fileReader.onload = function(fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        xmlhttp.send(JSON.stringify({
-                        projectName : formData.get("projectName"),
-                        addressId: addressId,
-                        description: formData.get("description"),
-                        image:{
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                    var data = JSON.stringify({
+                        projectName: formData.elements["projectName"].value,
+                        address: formData.elements["formAddress"].value,
+                        imageUrl : {
                             image: srcData.substring(23),
                             type: "jpg"
-                            },
-                        projectTypeId: projectTypeId
-                        }));
-                      fileReader.readAsDataURL(fileToLoad);
-                    alert(JSON.stringify({
-                        projectName : formData.get("projectName"),
-                        addressId: addressId,
-                        description: formData.get("description"),
-                        image:{
-                            image: srcData.substring(23),
-                            type: "jpg"
-                            },
-                        projectTypeId: projectTypeId
-                        }));
-                    }
-                    // alert("hello");
+                        },
+                        description: formData.elements["description"].value,
+                        projectTypeId: formData.elements["formTypeProject"].value
+                    });
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/project/create",
+                        contentType: "application/json",
+                        //dataType: "json",
+                        data:data,
+                        success: function(response){
+                                    //console.log(response);
+                                    alert("Submit success");
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            alert("Failllllllll");
+                            location.reload();
+                        }
+                    })
+                  }
+                  fileReader.readAsDataURL(fileToLoad);
                 }
             }
         </script>

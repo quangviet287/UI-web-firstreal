@@ -357,35 +357,48 @@
         <script src="../assets/js/price-range.js"></script>
         <script src="../assets/js/main.js"></script>
         <script type="text/javascript">
-            function createDetail(argument) {
+            function createDetail() {
                 var projectId = getUrlVar('projectId');
-                var formData = new FormData(document.getElementById('createDetail'));
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", 'http://localhost:8080/detail/create');
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-                
-                var filesSelected = document.getElementById("imageProject").files;
+                var formData = document.getElementById("projectFormCreate");
+                var filesSelected = document.getElementById("image").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
+
                   var fileReader = new FileReader();
+
                   fileReader.onload = function(fileLoadedEvent) {
-                        var srcData = fileLoadedEvent.target.result; // <--- data: base64
-                        xmlhttp.send(JSON.stringify({
-                        projectDetailName : formData.get("projectDetailName"),
+                    var srcData = fileLoadedEvent.target.result; // <--- data: base64
+                    var data = JSON.stringify({
+                        projectDetailName : formData.elements["projectDetailName"].value,
                         projectId: projectId,
-                        location: formData.get('location'),
-                        size: formData.get('size'),
-                        employeeId: formData.get('employeeId'),
-                        direction: formData.get('direction'),
-                        price: formData.get('price'),
+                        location: formData.elements["location"].value,
+                        size: formData.elements["size"].value,
+                        employeeId: formData.elements["employeeId"].value,
+                        direction: formData.elements["direction"].value,
+                        price: formData.elements["price"].value,
                         image:{
                             image: srcData.substring(23),
                             type: "jpg"
                             },
-                        state: false                       
-                        }));
-                      fileReader.readAsDataURL(fileToLoad);
-                    }
+                        state: false   
+                    });
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/project/create",
+                        contentType: "application/json",
+                        data:data,
+                        success: function(response){
+                                    //console.log(response);
+                                    alert("Submit success");
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            alert("Failllllllll");
+                            location.reload();
+                        }
+                    })
+                  }
+                  fileReader.readAsDataURL(fileToLoad);
                 }
             }
             function getUrlVar(key){
