@@ -267,30 +267,44 @@
             });
             function login(){
                 var projectDetailId =getUrlVar('projectDetailId');
-                var formData = new FormData(document.getElementById('formLogin'));
-                var data=
-                    JSON.stringify({
-                    username: formData.get("username"),
-                    password: formData.get("password"),
-                    projectDetailId: projectDetailId
-                    });
-                console.log(data);
-                $.ajax({
-                    type: "post",
-                    url: "http://localhost:8080/login",
-                    contentType: "application/json",
-                    //dataType: "json",
-                    data:data,
-                    success: function(response){
-                                console.log(response);
-                                alert("Login success");
-                                window.location.reload('customer.html');
-                            },
-                    error: function(response){
+                $.getJSON("http://localhost:8080/detail/getOne/"+projectDetailId, function (details) {
+                    var username = details.employee.username;
+                    var password = details.employee.password;
+                    var formData = new FormData(document.getElementById('formLogin'));
+                    var usernameInput = formData.get("username");
+                    var passwordInput = formData.get("password");
+                    if(username == usernameInput && password == passwordInput){
+                        alert("Login success");
+                        window.location.reload('customer.html');
+                    }else {
                         alert("Invalid username or password");
                         location.reload();
                     }
-                })
+                }    
+                // var formData = new FormData(document.getElementById('formLogin'));
+                // var data=
+                //     JSON.stringify({
+                //     username: formData.get("username"),
+                //     password: formData.get("password"),
+                //     projectDetailId: projectDetailId
+                //     });
+                // console.log(data);
+                // $.ajax({
+                //     type: "post",
+                //     url: "http://localhost:8080/login",
+                //     contentType: "application/json",
+                //     //dataType: "json",
+                //     data:data,
+                //     success: function(response){
+                //                 console.log(response);
+                //                 alert("Login success");
+                //                 window.location.reload('customer.html');
+                //             },
+                //     error: function(response){
+                //         alert("Invalid username or password");
+                //         location.reload();
+                //     }
+                // })
             }
             function loadProjectDetailId(){
                 var projectDetailId =getUrlVar('projectDetailId');
