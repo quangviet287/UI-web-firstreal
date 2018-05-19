@@ -37,7 +37,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -377,8 +379,8 @@
                     <div class="col-sm-6">
                         <h2>Chi Tiết <b>Dự Án </b></h2>
                     </div>
-                    <div class="col-sm-6">
-                        <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>
+                    <div id="buttonCreate" class="col-sm-6">
+                        <!-- <a href="ThemChiTietDA.html" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a> -->
                     </div>
                 </div>
             </div>
@@ -431,8 +433,8 @@
                         <input type="text" name="bookId" value="" type="hidden" />
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" onclick="deleteDetail();" class="btn btn-danger" value="Xoá">
+                        <input type="button" id="closeModal" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
+                        <input type="button" onclick="deleteDetail();"  data-dismiss="modal" class="btn btn-danger" value="Xoá">
                     </div>
                 </form>
             </div>
@@ -471,21 +473,46 @@
             function deleteDetail() {
                 var formData = document.getElementById("deleteDetail");
                 var projectDetailId = formData.elements["bookId"].value;
+                //alert(projectDetailId);
                 $.ajax({
-                        type: "delete",
+                        type: "DELETE",
                         url: "http://localhost:8080/detail/delete/"+projectDetailId,
                         contentType: "application/json",
-                        data:data,
                         success: function(response){
                                     //console.log(response);
                                     alert("Delete success");
+                                    closeModal();
+                                    loadInforProject();
+                                    loadAllDetailByproject();
                                     //window.location.reload('customer.html');
                                 },
-                        error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                        error: function(error){
+                           alert('Fail');
+                           closeModal();
+
+                           // location.reload();
                         }
-                    })
+                    });
+                    // }).done(function(data) {
+                    //     alert("done");
+                    //     location.reload();
+                    //     loadAllDetailByproject();
+                    //     loadInforProject();
+                    // });
+                    // }).fail(function(error){
+                    //     alert("fail" + error);
+                    //     console.log(error);
+                    //     location.reload();
+                    //     loadAllDetailByproject();
+                    //     loadInforProject();
+                    // });
+            }
+
+            function closeModal() {
+              $('.modal').modal('hide');
+                $('.modal-backdrop').hide();
+                //$(".modal .close").click()
+
             }
             function loadAllDetailByproject(){
                 var projectId =getUrlVar('projectId');
@@ -506,12 +533,13 @@
                                 '<td>'+detail.state+'</td>'+
                                 '<td>'+detail.employeeId+'</td>'+
                                 '<td>'+
-                                    '<a href="#editEmployeeModal?projectDetailId='+detail.projectDetailId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>'+
+                                    '<a href="SuaChiTietDA.html?projectDetailId='+detail.projectDetailId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>'+
                                     '<a href="#deleteEmployeeModal" data-book-id="'+detail.projectDetailId+'" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>'+
                                 '</td>'+
                             '</tr>'     
                         );
                     });
+                    $("#detailsByProject").html('');
                     $("#detailsByProject").append(items); 
                 });
                 $('#deleteEmployeeModal').on('show.bs.modal', function(e) {
@@ -543,8 +571,13 @@
                             '</tr>'
                         );
                     });
+                    $("#inforProject").html('');
                     $("#inforProject").append(item); 
                 });
+                var buttonCreate = (
+                        '<a href="ThemChiTietDA.html?projectId='+projectId+'" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Thêm mới </span></a>'
+                    );
+                $("#buttonCreate").append(buttonCreate);
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 

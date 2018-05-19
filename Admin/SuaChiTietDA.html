@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -300,7 +300,7 @@
         </nav>
         <!-- End of nav bar -->
         <div class="container">
-            <form id="detail">
+            <form id="detailForm">
                 <!-- <div class="modal-header">
                     <h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>
                 </div>
@@ -343,8 +343,6 @@
                     <input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
                 </div> -->
             </form>
-
-       
     </div>
 
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
@@ -373,10 +371,10 @@
                     easingType: 'linear'
                 };
                 loadDetail();
-                
             });
-            function loadDetail(argument) {
+            function loadDetail() {
                 var projectDetailId =getUrlVar('projectDetailId');
+                var item;
                 $.getJSON("http://localhost:8080/detail/getOne/"+projectDetailId, function (detail) {
                     var detailName = detail.projectDetailName;
                     var size = detail.size;
@@ -384,56 +382,59 @@
                     var direction = detail.direction;
                     var location = detail.location;
                     var employeeId = detail.employeeId;
-                    var item = (
-                        '<div class="modal-header">'+
-                            '<h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>'+
-                        '</div>'+
-                        '<div class="modal-body">'+
-                            '<div class="form-group">'+
-                                '<label>Mã chi tiết dự án </label>'+
-                                '<input type="text" class="form-control" value="'+projectDetailId+'" required maxlength="20" minlength="3" disabled>'+
+                        console.log(detail);
+                    $.each(detail, function (index, detail){
+                        item = (
+                            '<div class="modal-header">'+
+                                '<h2 class="modal-title" style="text-align: center;">Sửa chi tiết dự án</h2>'+
                             '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Tên Chi Tieest dự án</label>'+
-                                '<input name="projectDetailName" value="'+detailName+'" type="text " class="form-control" required minlength="3" >'+
+                            '<div class="modal-body">'+
+                                '<div class="form-group">'+
+                                    '<label>Mã chi tiết dự án </label>'+
+                                    '<input type="text" class="form-control" value="'+projectDetailId+'" required maxlength="20" minlength="3" disabled>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Tên Chi Tieest dự án</label>'+
+                                    '<input name="projectDetailName" value="'+detailName+'" type="text " class="form-control" required minlength="3" >'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Diện tích</label>'+
+                                    '<input name="size" type="text " value="'+size+'" class="form-control" required minlength="3">'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Giá</label>'+
+                                    '<input name="price" type="text " value="'+price+'" class="form-control" required minlength="3">'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Hướng</label>'+
+                                    '<input name="direction" type="text " value="'+direction+'" class="form-control" required minlength="3">'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Hình ảnh</label>'+
+                                    '<input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Mã nhân viên</label>'+
+                                    '<input name="employeeId" type="text " value="'+employeeId+'" class="form-control" required minlength="3" maxlength="10">'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Vi Tri</label>'+
+                                    '<input name="location" value="'+location+'" type="text " class="form-control" required minlength="3" maxlength="10">'+
+                                '</div>'+
                             '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Diện tích</label>'+
-                                '<input name="size" type="text" value="'+size+'" class="form-control" required minlength="3">'+
-                            '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Giá</label>'+
-                                '<input name="price" type="text" value="'+price+'" class="form-control" required minlength="3">'+
-                            '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Hướng</label>'+
-                                '<input name="direction" type="text " value="'+direction+'" class="form-control" required minlength="3">'+
-                            '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Hình ảnh</label>'+
-                                '<input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
-                            '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Mã nhân viên</label'>+
-                                '<input name="employeeId" type="text" value="'+employeeId+'" class="form-control" required minlength="3" maxlength="10">'+
-                            '</div>'+
-                            '<div class="form-group">'+
-                                '<label>Vi Tri</label>'+
-                                '<input name="location" type="text" value="'+location+'" class="form-control" required minlength="3" maxlength="10">'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="modal-footer">'+
-                            '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminChiTietDA.html" value="Huỷ bỏ"><br><br>'+
-                            '<input type="submit" onclick="update();" class="btn btn-success" value="Cap Nhat">'+
-                        '</div>'
-                    );
-                }
-                $("#detail").append(item);
+                            '<div class="modal-footer">'+
+                                '<input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>'+
+                                '<input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">'+
+                            '</div>'
+                        );    
+                    });
+                $("#detailForm").append(item);
+                });
             }     
             function update(argument) {
                 var projectDetailId =getUrlVar('projectDetailId');
                 var projectId = getUrlVar('projectId');
-                var formData = document.getElementById("detail");
+                var formData = document.getElementById("detailForm");
                 var filesSelected = document.getElementById("image").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];

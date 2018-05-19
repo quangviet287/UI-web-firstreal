@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -301,11 +301,6 @@
                             <a href="AdminQLNV.html" class="dropdown-toggle active" >Quản Lý Nhân Viên </a>
                         </li>
                         <li class="wow fadeInDown" data-wow-delay="0.3s"><a class="" href="AdminThongKe.html">Thống Kê    </a></li>
-                        
-
-                        
-
-                 
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -327,9 +322,13 @@
                     </div>
                     <div class="form-group">
                         <label>Giới tính</label> <br>
-                        <input type="radio" name="sex" value="nam" checked=""> Nam
-                        <input type="radio" name="sex" value="nu"> Nữ
+                        <input type="radio" name="sex" value="true" checked=""> Nam
+                        <input type="radio" name="sex" value="false"> Nữ
                         
+                    </div>
+                    <div class="form-group">
+                        <label>Tuooi</label>
+                        <input type="text" name="age" class="form-control" required minlength="3" >
                     </div>
                     <div class="form-group">
                         <label>Số điện thoại</label>
@@ -349,13 +348,13 @@
                     </div>
                     <div class="form-group">
                         <label>Quyền</label>
-                        <input type="text" name="role" class="form-control" required minlength="3" maxlength="10">
+                        <input type="text" name="role" class="form-control" required  maxlength="10">
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <a href="AdminQLNV.html"><input type="button" class="btn btn-default" value="Huỷ bỏ"></a><br><br>
-                    <input type="submit" onclick="createEmployee();" class="btn btn-success" value="Thêm mới">
+                    <input type="button" onclick="createEmployee();" class="btn btn-success" value="Thêm mới">
                 </div>
             </form>
 
@@ -390,8 +389,9 @@
                     var data = JSON.stringify({
                         employeeName: formData.elements["employeeName"].value,
                         sex: formData.elements["sex"].value,
+                        age: formData.elements["age"].value,
                         phoneNumber: formData.elements["phoneNumber"].value,
-                        imageUrl : {
+                        imageProfileUrl : {
                             image: srcData.substring(23),
                             type: "jpg"
                         },
@@ -399,11 +399,11 @@
                         password: formData.elements["password"].value,
                         roleId: formData.elements["role"].value
                     });
+                    console.log(data);
                     $.ajax({
-                        type: "post",
+                        type: "POST",
                         url: "http://localhost:8080/employee/create",
                         contentType: "application/json",
-                        //dataType: "json",
                         data:data,
                         success: function(response){
                                     //console.log(response);

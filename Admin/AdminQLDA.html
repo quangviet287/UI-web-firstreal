@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -364,7 +364,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Bạn có chắc chắn muốn xoá dự án này?</p>
-
+                        <input type="text" name="bookId" value="" type="hidden" />
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
@@ -416,13 +416,18 @@
                                 '<td>'+projects.projectTypeName+'</td>'+
                                 '<td>'+
                                     '<a href="AdminChiTietDA.html?projectId='+projects.projectId+'" class="btn btn-success" style="width: 80px"><span>Xem</span></a><br><br>'+
-                                    '<a href="#deleteEmployeeModal" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a><br><br>'+
+                                    '<a href="#deleteEmployeeModal" data-book-id="'+projects.projectId+'" class="btn btn-danger" style="width: 80px" data-toggle="modal"><span>Xoá </span></a><br><br>'+
                                     '<a href="SuaDA.html?projectId='+projects.projectId+'" class="btn btn-info" style="width: 80px"><span>Sửa</span></a>'+
                                 '</td>'+
                             '</tr>'
                         );
                     });
+                    $("#allProjects").html('');
                     $("#allProjects").append(items); 
+                });
+                $('#deleteEmployeeModal').on('show.bs.modal', function(e) {
+                    var bookId = $(e.relatedTarget).data('book-id');
+                    $(e.currentTarget).find('input[name="bookId"]').val(bookId);
                 });
             }
         </script>

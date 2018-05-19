@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -308,64 +308,53 @@
             </div><!-- /.container-fluid -->
         </nav>
         <!-- End of nav bar -->
-        <div id="project" class="container">
-            <!-- <form>
-                    <div class="modal-header">
-                        <h2 class="modal-title" style="text-align: center;">Sửa dự án</h2>
+        <div class="container">
+            <form id="project">
+                <!-- <div class="modal-header">
+                    <h2 class="modal-title" style="text-align: center;">Sửa dự án</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Mã dự án </label>
+                        <input type="text" class="form-control" required maxlength="10" minlength="3">
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Mã dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Tên dự án</label>
-                            <input type="text " class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ  </label>
-                                <select style="width: 100%;height:35px" id="basic"  required >
-                                        <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
-                                        <option>Đà Nẵng </option>
-                                        <option>Quảng Nam</option>
-                                        <option>Huế </option>
+                    <div class="form-group">
+                        <label>Tên dự án</label>
+                        <input type="text " class="form-control" required minlength="3" >
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ  </label>
+                            <select style="width: 100%;height:35px" id="basic"  required >
+                                    <option value="" disabled="" selected=""> - Chọn địa chỉ - </option>
+                                    <option>Đà Nẵng </option>
+                                    <option>Quảng Nam</option>
+                                    <option>Huế </option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Hình ảnh</label>
+                        <input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea class="form-control" required style="height: 150px" minlength="6"></textarea>
+                    </div>
+                    <div class="form-group">
+                    <label>Loại dự án</label>
+                                <select id="basic" style="width: 100%;height:35px" required >
+                                    <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
+                                    <option>Đất nền phân lô </option>
+                                    <option>Chung cư căn hộ</option>
+                                    <option>Cao ốc văn phòng </option>
+                                    <option>Nhà phố biệt thự</option>
                                 </select>
-                        </div>
-                        
-                        
-                        
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Mô tả</label>
-                            <textarea class="form-control" required style="height: 150px" minlength="6"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                        <label>Loại dự án</label>
-                                    <select id="basic" style="width: 100%;height:35px" required >
-                                        <option value="" disabled="" selected=""> - Chọn loại dự án - </option>
-                                        <option>Đất nền phân lô </option>
-                                        <option>Chung cư căn hộ</option>
-                                        <option>Cao ốc văn phòng </option>
-                                        <option>Nhà phố biệt thự</option>
-
-
-                                    </select>
-                        </div>
-                        
-
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-info" value="Lưu">
-                    </div>
-                </form> -->
-
-       
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
+                    <input type="submit" class="btn btn-info" value="Lưu">
+                </div>-->
+            </form> 
     </div>
 
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
@@ -397,8 +386,8 @@
             });
             function loadProject(){
                 var projectId = getUrlVar('projectId');
+                var item;
                 $.getJSON("http://localhost:8080/project/getOne/"+projectId, function (projects) {
-                    var items;
                     var projectId = projects.projectId;
                     var address = projects.addressName;
                     var projectName = projects.projectName;
@@ -406,56 +395,54 @@
                     var projectTypeName = projects.projectTypeName;
                     console.log(description);
                     $.each(projects, function (index, projects) {
-                        items = (
-                            '<form>'+
-                                '<div class="modal-header">'+
-                                    '<h2 class="modal-title" style="text-align: center;">Sửa dự án</h2>'+
+                        item = (
+                           '<div class="modal-header">'+
+                                '<h2 class="modal-title" style="text-align: center;">Sửa dự án</h2>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                                '<div class="form-group">'+
+                                    '<label>Mã dự án </label>'+
+                                    '<input type="text" class="form-control" value="'+projectId+'" required maxlength="10" minlength="3" disabled>'+
                                 '</div>'+
-                                '<div class="modal-body">'+
-                                    '<div class="form-group">'+
-                                        '<label>Mã dự án </label>'+
-                                        '<input type="text" class="form-control" value="'+projectId+'" required maxlength="10" minlength="3" disabled>'+
-                                    '</div>'+
-                                    '<div class="form-group">'+
-                                        '<label>Tên dự án</label>'+
-                                        '<input type="text " class="form-control" value="'+projectName+'" required minlength="3" >'+
-                                    '</div>'+
-                                    '<div class="form-group">'+
-                                        '<label>Địa chỉ  </label>'+
-                                            '<select value="" style="width: 100%;height:35px" id="basic"  required >'+
-                                                    '<option value="" disabled="" selected=""> '+address+' </option>'+
-                                                    '<option >Đà Nẵng </option>'+
-                                                    '<option>Quảng Nam</option>'+
-                                                    '<option>Huế </option>'+
+                                '<div class="form-group">'+
+                                    '<label>Tên dự án</label>'+
+                                    '<input type="text " class="form-control" value="'+projectName+'" required minlength="3" >'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Địa chỉ  </label>'+
+                                        '<select value="" style="width: 100%;height:35px" id="basic"  required >'+
+                                                '<option value="" disabled="" selected=""> '+address+' </option>'+
+                                                '<option >Đà Nẵng </option>'+
+                                                '<option>Quảng Nam</option>'+
+                                                '<option>Huế </option>'+
+                                        '</select>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Hình ảnh</label>'+
+                                    '<input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<label>Mô tả</label>'+
+                                    '<textarea class="form-control" required style="height: 150px" minlength="6">'+description+'</textarea>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                '<label>Loại dự án</label>'+
+                                            '<select id="basic" style="width: 100%;height:35px" required >'+
+                                                '<option value="" disabled="" selected=""> '+projectTypeName+' </option>'+
+                                                '<option>Đất nền phân lô </option>'+
+                                                '<option>Chung cư căn hộ</option>'+
+                                                '<option>Cao ốc văn phòng </option>'+
+                                                '<option>Nhà phố biệt thự</option>'+
                                             '</select>'+
-                                    '</div>'+
-                                    '<div class="form-group">'+
-                                        '<label>Hình ảnh</label>'+
-                                        '<input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
-                                    '</div>'+
-                                    '<div class="form-group">'+
-                                        '<label>Mô tả</label>'+
-                                        '<textarea class="form-control" required style="height: 150px" minlength="6">'+description+'</textarea>'+
-                                    '</div>'+
-                                    '<div class="form-group">'+
-                                    '<label>Loại dự án</label>'+
-                                                '<select id="basic" style="width: 100%;height:35px" required >'+
-                                                    '<option value="" disabled="" selected=""> '+projectTypeName+' </option>'+
-                                                    '<option>Đất nền phân lô </option>'+
-                                                    '<option>Chung cư căn hộ</option>'+
-                                                    '<option>Cao ốc văn phòng </option>'+
-                                                    '<option>Nhà phố biệt thự</option>'+
-                                                '</select>'+
-                                    '</div>'+
                                 '</div>'+
-                                '<div class="modal-footer">'+
-                                    '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminQLDA.html" value="Huỷ bỏ"><br><br>'+
-                                    '<input type="submit" onclick="update();" class="btn btn-info" value="Lưu">'+
-                                '</div>'+
-                            '</form>'
+                            '</div>'+
+                            '<div class="modal-footer">'+
+                                '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminQLDA.html" value="Huỷ bỏ"><br><br>'+
+                                '<input type="submit" onclick="update();" class="btn btn-info" value="Lưu">'+
+                            '</div>'     
                         );
                     });
-                    $("#project").append(items); 
+                    $("#project").append(item); 
                 });
             }
             function update(){

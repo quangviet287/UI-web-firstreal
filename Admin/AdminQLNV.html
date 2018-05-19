@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -382,17 +382,18 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form id="deleteEmployee">
                     <div class="modal-header">
                         <h4 class="modal-title">Xoá nhân viên </h4>
                         <button type="button" class="close" onclick="deleteEmpoyee();" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
                         <p>Bạn có chắc chắn muốn xoá nhân viên này?</p>
+                        <input type="text" name="bookId" value="" type="hidden" />
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-danger" value="Xoá">
+                        <input type="button" data-dismiss="modal" onclick="deleteEmpoyee();" class="btn btn-danger" value="Xoá">
                     </div>
                 </form>
             </div>
@@ -424,7 +425,6 @@
                     easingType: 'linear'
                 };
                 loadAllEmployee();
-                
             });
             
             function loadAllEmployee(){
@@ -446,29 +446,34 @@
                                 '<td>'+employees.roleName+'</td>'+
                                 '<td>'+
                                     '<a href="SuaNhanVien.html?employeeId='+employees.employeeId+'" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Sửa">&#xE254;</i></a>'+
-                                    '<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Xoá">&#xE872;</i></a>'+
+                                    '<a href="#deleteEmployeeModal" data-book-id="'+employees.employeeId+'" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Xoá">&#xE872;</i></a>'+
                                 '</td>'+
                             '</tr>'
                         );
                     });
+                    $("#allEmployees").html(''); 
                     $("#allEmployees").append(items); 
                 });
+                $('#deleteEmployeeModal').on('show.bs.modal', function(e) {
+                    var bookId = $(e.relatedTarget).data('book-id');
+                    $(e.currentTarget).find('input[name="bookId"]').val(bookId);
+                });
             }
-            // $(document).on("click", ".delete", function () {
-            //      var myBookId = $(this).data('id');
-            //      $(".modal-body #bookId").val( myBookId );
-            //      // As pointed out in comments, 
-            //      // it is superfluous to have to manually call the modal.
-            //      // $('#addBookDialog').modal('show');
-            // });
             function deleteEmpoyee() {
-                var employeeId =getUrlVar('employeeId');
+                //var employeeId =getUrlVar('employeeId');
+                var formData = document.getElementById("deleteEmployee");
+                var employeeId = formData.elements["bookId"].value;
                 $.ajax({
                     url: 'http://localhost:8080/employee/delete/'+employeeId,
                     type: 'DELETE',
                     contentType: "application/json",
                     success: function (argument) {
                         alert("Delete success");
+                        loadAllEmployee();
+                    },
+                    error: function(error){
+                        alert('Fail');
+                        location.reload();
                     }
                 });
             }

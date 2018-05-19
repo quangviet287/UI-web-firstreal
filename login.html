@@ -33,6 +33,7 @@
         <link rel="stylesheet" href="assets/css/owl.transitions.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
         <style type="text/css">
@@ -160,7 +161,7 @@
                     <div class="box-for overflow" >
                         <div class="col-md-12 col-xs-12 login-blocks">
                             <h2>Đăng nhập : </h2>
-                            <form id="formLogin">
+                            <form action="customer.html" id="formLogin">
                                 <div class="form-group">
                                     <label for="username">Tên đăng nhập</label>
                                     <input type="text" class="form-control" name="username" required minlength="3" maxlength="20">
@@ -266,21 +267,25 @@
                 loadProjectDetailId();
             });
             function login(){
-                var projectDetailId =getUrlVar('projectDetailId');
-                $.getJSON("http://localhost:8080/detail/getOne/"+projectDetailId, function (details) {
-                    var username = details.employee.username;
-                    var password = details.employee.password;
-                    var formData = new FormData(document.getElementById('formLogin'));
-                    var usernameInput = formData.get("username");
-                    var passwordInput = formData.get("password");
+                
+                var employeeId =getUrlVar('employeeId');
+                var formData = new FormData(document.getElementById('formLogin'));
+                var usernameInput = formData.get("username");
+                var passwordInput = formData.get("password");
+                $.getJSON("http://localhost:8080/employee/getOne/"+employeeId, function (employee) {
+                    console.log(employee);
+
+                    var username = employee.userName;
+                    var password = employee.password;
+                    console.log(username + password + "------------" + usernameInput + passwordInput);
                     if(username == usernameInput && password == passwordInput){
                         alert("Login success");
-                        window.location.reload('customer.html');
+                        //window.open('customer.html');
                     }else {
                         alert("Invalid username or password");
                         location.reload();
                     }
-                }    
+                });    
                 // var formData = new FormData(document.getElementById('formLogin'));
                 // var data=
                 //     JSON.stringify({

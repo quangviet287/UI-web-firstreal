@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
@@ -301,48 +301,48 @@
         <!-- End of nav bar -->
         <div class="container">
             <form id="createDetail">
-                    <div class="modal-header">
-                        <h2 class="modal-title" style="text-align: center;">Thêm mới chi tiết dự án</h2>
+                <div class="modal-header">
+                    <h2 class="modal-title" style="text-align: center;">Thêm mới chi tiết dự án</h2>
+                </div>
+                <div class="modal-body">
+                    <div id="loadProjectId" class="form-group">
+                        <!-- <label>Mã dự án </label>
+                        <input type="text" name="projectId" class="form-control" required disabled minlength="3"> -->
                     </div>
-                    <div class="modal-body">
-                        <!-- <div class="form-group">
-                            <label>Mã chi tiết dự án </label>
-                            <input type="text" class="form-control" required maxlength="10" minlength="3">
-                        </div> -->
-                        <div class="form-group">
-                            <label>Tên Chi Tieest dự án</label>
-                            <input name="projectDetailName" type="text " class="form-control" required minlength="3" >
-                        </div>
-                        <div class="form-group">
-                            <label>Diện tích</label>
-                            <input name="size" type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Giá</label>
-                            <input name="price" type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Hướng</label>
-                            <input name="direction" type="text " class="form-control" required minlength="3">
-                        </div>
-                        <div class="form-group">
-                            <label>Hình ảnh</label>
-                            <input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Mã nhân viên</label>
-                            <input name="employeeId" type="text " class="form-control" required minlength="3" maxlength="10">
-                        </div>
-                        <div class="form-group">
-                            <label>Vi Tri</label>
-                            <input name="location" type="text " class="form-control" required minlength="3" maxlength="10">
-                        </div>
+                    <div class="form-group">
+                        <label>Tên Chi Tieest dự án</label>
+                        <input name="projectDetailName" type="text " class="form-control" required minlength="3" >
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
+                    <div class="form-group">
+                        <label>Diện tích</label>
+                        <input name="size" type="text " class="form-control" required minlength="3">
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label>Giá</label>
+                        <input name="price" type="text " class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hướng</label>
+                        <input name="direction" type="text " class="form-control" required minlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label>Hình ảnh</label>
+                        <input id="image" name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã nhân viên</label>
+                        <input name="employeeId" type="text" class="form-control" required minlength="3" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Vi Tri</label>
+                        <input name="location" type="text " class="form-control" required minlength="3" maxlength="10">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
+                    <input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
+                </div>
+            </form>
     </div>
         <script src="../assets/js/modernizr-2.6.2.min.js"></script>
         <script src="../assets/js/jquery-1.10.2.min.js"></script>
@@ -357,10 +357,34 @@
         <script src="../assets/js/price-range.js"></script>
         <script src="../assets/js/main.js"></script>
         <script type="text/javascript">
+            $(document).ready(function() {
+                var defaults = {
+                    containerID: 'toTop', // fading element id
+                    containerHoverID: 'toTopHover', // fading element hover id
+                    scrollSpeed: 100,
+                    easingType: 'linear'
+                };
+                loadProjectId();
+            });
+            function loadProjectId(){
+                var projectId = getUrlVar('projectId');
+                var loadProjectId = (
+                    '<label>Mã dự án </label>'+
+                    '<input type="text" name="projectId" value="'+projectId+'" class="form-control" required disabled minlength="3">'
+                );
+                $("#loadProjectId").append(loadProjectId);    
+            }
             function createDetail() {
                 var projectId = getUrlVar('projectId');
-                var formData = document.getElementById("projectFormCreate");
+                var formData = document.getElementById("createDetail");
                 var filesSelected = document.getElementById("image").files;
+                var employeeId = formData.elements["employeeId"].value;
+                var price = formData.elements["price"].value;
+                var size = formData.elements["size"].value;
+                var projectDetailName = formData.elements["projectDetailName"].value;
+                var location = formData.elements["location"].value;
+                var direction = formData.elements["direction"].value;
+
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
 
@@ -369,22 +393,24 @@
                   fileReader.onload = function(fileLoadedEvent) {
                     var srcData = fileLoadedEvent.target.result; // <--- data: base64
                     var data = JSON.stringify({
-                        projectDetailName : formData.elements["projectDetailName"].value,
                         projectId: projectId,
-                        location: formData.elements["location"].value,
-                        size: formData.elements["size"].value,
-                        employeeId: formData.elements["employeeId"].value,
-                        direction: formData.elements["direction"].value,
-                        price: formData.elements["price"].value,
                         image:{
                             image: srcData.substring(23),
                             type: "jpg"
                             },
-                        state: false   
+                        employeeId: employeeId,
+                        price: price,
+                        state: false,   
+                        size: size,
+                        projectDetailName : projectDetailName,
+                        location: location,
+                        direction: direction
                     });
+                    // alert(data);
+                    console.log(data);
                     $.ajax({
                         type: "post",
-                        url: "http://localhost:8080/project/create",
+                        url: "http://localhost:8080/detail/create",
                         contentType: "application/json",
                         data:data,
                         success: function(response){
@@ -396,10 +422,11 @@
                             alert("Failllllllll");
                             location.reload();
                         }
-                    })
+                    });
                   }
                   fileReader.readAsDataURL(fileToLoad);
                 }
+                // alert("abc");
             }
             function getUrlVar(key){
                 var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
