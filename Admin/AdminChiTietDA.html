@@ -42,6 +42,9 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
+
 <style type="text/css">
     body {
         color: #566787;
@@ -480,32 +483,17 @@
                         contentType: "application/json",
                         success: function(response){
                                     //console.log(response);
-                                    alert("Delete success");
+                                    swal("Good job!", "Xóa Chi Tiết Của Dự Án Thành Công!", "success");
                                     closeModal();
                                     loadInforProject();
                                     loadAllDetailByproject();
                                     //window.location.reload('customer.html');
                                 },
                         error: function(error){
-                           alert('Fail');
+                           swal("Oops...", "Xóas Thất Bại!", "error");
                            closeModal();
-
-                           // location.reload();
                         }
                     });
-                    // }).done(function(data) {
-                    //     alert("done");
-                    //     location.reload();
-                    //     loadAllDetailByproject();
-                    //     loadInforProject();
-                    // });
-                    // }).fail(function(error){
-                    //     alert("fail" + error);
-                    //     console.log(error);
-                    //     location.reload();
-                    //     loadAllDetailByproject();
-                    //     loadInforProject();
-                    // });
             }
 
             function closeModal() {
@@ -517,7 +505,7 @@
             function loadAllDetailByproject(){
                 var projectId =getUrlVar('projectId');
                 //alert(projectId);
-                $.getJSON("http://localhost:8080/detail/getAll/project/"+projectId, function (detail) {
+                $.getJSON("http://localhost:8080/detail/admin/getAll/project/"+projectId, function (detail) {
                     console.log(detail);
                     var items = [];
                     $.each(detail, function (index, detail) {

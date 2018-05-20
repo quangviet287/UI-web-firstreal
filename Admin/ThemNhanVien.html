@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
 <style type="text/css">
     body {
@@ -406,13 +408,11 @@
                         contentType: "application/json",
                         data:data,
                         success: function(response){
-                                    //console.log(response);
-                                    alert("Submit success");
-                                    //window.location.reload('customer.html');
+                                    swal("Good job!", "Thêm Mới Nhân Viên Thành Công!", "success");
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                                    swal("Oops...", "Thêm Thất Bại!", "error");
+                                    response.preventDefault();
                         }
                     })
                   }

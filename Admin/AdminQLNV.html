@@ -40,6 +40,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
+
 <style type="text/css">
     body {
         color: #566787;
@@ -393,7 +396,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="button" data-dismiss="modal" onclick="deleteEmpoyee();" class="btn btn-danger" value="Xoá">
+                        <input type="button" data-dismiss="modal" data-dismiss="modal" onclick="deleteEmpoyee();" class="btn btn-danger" value="Xoá">
                     </div>
                 </form>
             </div>
@@ -468,12 +471,11 @@
                     type: 'DELETE',
                     contentType: "application/json",
                     success: function (argument) {
-                        alert("Delete success");
+                        swal("Good job!", "Xóa Nhân Viên Thành Công!", "success");
                         loadAllEmployee();
                     },
                     error: function(error){
-                        alert('Fail');
-                        location.reload();
+                        swal("Oops...", "Xóa Thất Bại!", "error");
                     }
                 });
             }

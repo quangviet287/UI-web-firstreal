@@ -39,7 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 <style type="text/css">
     body {
         color: #566787;
@@ -411,11 +412,11 @@
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Hình ảnh</label>'+
-                                    '<input name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                                    '<input id="image" name="image" type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Mã nhân viên</label>'+
-                                    '<input name="employeeId" type="text " value="'+employeeId+'" class="form-control" required minlength="3" maxlength="10">'+
+                                    '<input name="employeeId" type="text " value="'+employeeId+'" class="form-control" disabled required minlength="3" maxlength="10">'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Vi Tri</label>'+
@@ -424,7 +425,7 @@
                             '</div>'+
                             '<div class="modal-footer">'+
                                 '<input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>'+
-                                '<input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">'+
+                                '<input type="button" onclick="update();" class="btn btn-success" value="Lưu">'+
                             '</div>'
                         );    
                     });
@@ -458,18 +459,16 @@
                         state: false   
                     });
                     $.ajax({
-                        type: "post",
-                        url: "http://localhost:8080/project/create",
+                        type: "PUT",
+                        url: "http://localhost:8080/detail/update/"+ projectDetailId,
                         contentType: "application/json",
                         data:data,
                         success: function(response){
-                                    //console.log(response);
-                                    alert("Submit success");
-                                    //window.location.reload('customer.html');
+                                    swal("Good job!", "Sửa Thông Tin Chi Tiết Dự Án Thành Công!", "success");
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                            swal("Oops...", "Sửa Thất Bại!", "error");
+                                //response.preventDefault();
                         }
                     })
                   }

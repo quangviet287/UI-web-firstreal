@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
 <style type="text/css">
     body {
@@ -393,7 +395,7 @@
                     var projectName = projects.projectName;
                     var description = projects.description;
                     var projectTypeName = projects.projectTypeName;
-                    console.log(description);
+                    // console.log(description);
                     $.each(projects, function (index, projects) {
                         item = (
                            '<div class="modal-header">'+
@@ -406,28 +408,28 @@
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Tên dự án</label>'+
-                                    '<input type="text " class="form-control" value="'+projectName+'" required minlength="3" >'+
+                                    '<input type="text" name="projectName" class="form-control" value="'+projectName+'" required minlength="3" >'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Địa chỉ  </label>'+
-                                        '<select value="" style="width: 100%;height:35px" id="basic"  required >'+
-                                                '<option value="" disabled="" selected=""> '+address+' </option>'+
-                                                '<option >Đà Nẵng </option>'+
-                                                '<option>Quảng Nam</option>'+
-                                                '<option>Huế </option>'+
+                                        '<select id="formAddress" value="" style="width: 100%;height:35px" id="basic"  required >'+
+                                                '<option> '+address+' </option>'+
+                                                '<option name="address" value="A1" >Đà Nẵng </option>'+
+                                                '<option name="address" value="A2" >Quảng Nam</option>'+
+                                                '<option name="address" value="A3" >Huế </option>'+
                                         '</select>'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Hình ảnh</label>'+
-                                    '<input type="file" accept=".png,.jpg,.jpeg" class="form-control" required>'+
+                                    '<input type="file" id="imageProject" accept=".png,.jpg,.jpeg" class="form-control" required>'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                     '<label>Mô tả</label>'+
-                                    '<textarea class="form-control" required style="height: 150px" minlength="6">'+description+'</textarea>'+
+                                    '<textarea name="description" class="form-control" required style="height: 150px" minlength="6">'+description+'</textarea>'+
                                 '</div>'+
                                 '<div class="form-group">'+
                                 '<label>Loại dự án</label>'+
-                                            '<select id="basic" style="width: 100%;height:35px" required >'+
+                                            '<select id="basic" style="width: 100%;height:35px" required  disabled>'+
                                                 '<option value="" disabled="" selected=""> '+projectTypeName+' </option>'+
                                                 '<option>Đất nền phân lô </option>'+
                                                 '<option>Chung cư căn hộ</option>'+
@@ -438,7 +440,7 @@
                             '</div>'+
                             '<div class="modal-footer">'+
                                 '<input type="button" class="btn btn-default" data-dismiss="modal" href="AdminQLDA.html" value="Huỷ bỏ"><br><br>'+
-                                '<input type="submit" onclick="update();" class="btn btn-info" value="Lưu">'+
+                                '<input type="button" onclick="update();" class="btn btn-info" value="Lưu">'+
                             '</div>'     
                         );
                     });
@@ -448,7 +450,7 @@
             function update(){
                 var projectId = getUrlVar('projectId');
                 var formData = document.getElementById("project");
-                var filesSelected = document.getElementById("image").files;
+                var filesSelected = document.getElementById("imageProject").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
 
@@ -459,27 +461,24 @@
                     var data = JSON.stringify({
                         projectName: formData.elements["projectName"].value,
                         address: formData.elements["formAddress"].value,
-                        imageUrl : {
+                        image : {
                             image: srcData.substring(23),
                             type: "jpg"
                         },
-                        description: formData.elements["description"].value,
-                        projectTypeId: formData.elements["formTypeProject"].value
+                        description: formData.elements["description"].value
                     });
                     $.ajax({
-                        type: "post",
-                        url: "http://localhost:8080/project/create",
+                        type: "PUT",
+                        url: "http://localhost:8080/project/update/"+projectId,
                         contentType: "application/json",
                         //dataType: "json",
                         data:data,
                         success: function(response){
-                                    //console.log(response);
-                                    alert("Submit success");
-                                    //window.location.reload('customer.html');
+                                    swal("Good job!", "Sửa Thông Tin Dự Án Thành Công!", "success");
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                                swal("Oops...", "Sửa Thất Bại!", "error");
+                                //response.preventDefault();
                         }
                     })
                   }

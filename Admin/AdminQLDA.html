@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
 <style type="text/css">
     body {
@@ -357,7 +359,7 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form id="deleteProject">
                     <div class="modal-header">
                         <h4 class="modal-title">Xoá dự án </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -368,7 +370,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                        <input type="submit" class="btn btn-danger" value="Xoá">
+                        <input type="button" onclick="deleteProject();" data-dismiss="modal" class="btn btn-danger" value="Xoá">
                     </div>
                 </form>
             </div>
@@ -428,6 +430,22 @@
                 $('#deleteEmployeeModal').on('show.bs.modal', function(e) {
                     var bookId = $(e.relatedTarget).data('book-id');
                     $(e.currentTarget).find('input[name="bookId"]').val(bookId);
+                });
+            }
+            function deleteProject(argument) {
+                var formData = document.getElementById("deleteProject");
+                var projectId = formData.elements["bookId"].value;
+                $.ajax({
+                    url: 'http://localhost:8080/project/delete/'+projectId,
+                    type: 'DELETE',
+                    contentType: "application/json",
+                    success: function (argument) {
+                        swal("Good job!", "Xóa Dự Án Thành Công!", "success");
+                        loadAllProject();
+                    },
+                    error: function(error){
+                        swal("Oops...", "Xóa Thất Bại!", "error");
+                    }
                 });
             }
         </script>

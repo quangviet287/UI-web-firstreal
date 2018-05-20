@@ -32,6 +32,8 @@
         <link rel="stylesheet" href="assets/css/responsive.css">
         <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
         <style type="text/css">
             /*--bottom-to-top --*/
@@ -272,7 +274,7 @@
                     );
                 $("#Welcome").append(item); 
 
-                var statistical = ('<a href="NhanVienThongKe.html?employeeName='+employeeName+'">Thong ke giao dich</a>');
+                var statistical = ('<a href="NhanVienThongKe.html?employeeName='+employeeName+'">Thống Kê Giao Dịch</a>');
                 $("#statistical").append(statistical);
             }
             function submitFormCustomer(){
@@ -299,7 +301,7 @@
                     //     location.reload();
                     // }
                 }).done(function (response){
-                            alert("Submit success information customer");
+                            swal("Good job!", "Tạo Thông Tin Khách Hàng Thành Công!", "success");
                 })
             }
             function loadProjectDetailId(){
@@ -329,13 +331,13 @@
                         contentType: "application/json",
                         success: function(response){
                                     //console.log(response);
-                                    alert("Xác Nhận Giao Dịch Thành Công");
+                                   swal("Good job!", "Tạo Thông Giao Dịch Thành Công!", "success");
                                     location.reload();
                                     //window.location.reload('customer.html');
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                            swal("Oops...", "Tạo Giao Dịch  Thất Bại!", "error");
+                            //location.reload();
                         }
                     });
             }

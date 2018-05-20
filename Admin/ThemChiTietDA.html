@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
 <style type="text/css">
     body {
@@ -340,7 +342,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
-                    <input type="submit" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
+                    <input type="button" onclick="createDetail();" class="btn btn-success" value="Thêm mới">
                 </div>
             </form>
     </div>
@@ -378,13 +380,6 @@
                 var projectId = getUrlVar('projectId');
                 var formData = document.getElementById("createDetail");
                 var filesSelected = document.getElementById("image").files;
-                var employeeId = formData.elements["employeeId"].value;
-                var price = formData.elements["price"].value;
-                var size = formData.elements["size"].value;
-                var projectDetailName = formData.elements["projectDetailName"].value;
-                var location = formData.elements["location"].value;
-                var direction = formData.elements["direction"].value;
-
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
 
@@ -398,29 +393,27 @@
                             image: srcData.substring(23),
                             type: "jpg"
                             },
-                        employeeId: employeeId,
-                        price: price,
+                        employeeId: formData.elements["employeeId"].value,
+                        price: formData.elements["price"].value,
                         state: false,   
-                        size: size,
-                        projectDetailName : projectDetailName,
-                        location: location,
-                        direction: direction
+                        size: formData.elements["size"].value,
+                        projectDetailName : formData.elements["projectDetailName"].value,
+                        location: formData.elements["location"].value,
+                        direction: formData.elements["direction"].value
                     });
                     // alert(data);
                     console.log(data);
                     $.ajax({
-                        type: "post",
+                        type: "POST",
                         url: "http://localhost:8080/detail/create",
                         contentType: "application/json",
                         data:data,
                         success: function(response){
-                                    //console.log(response);
-                                    alert("Submit success");
-                                    //window.location.reload('customer.html');
+                                    swal("Good job!", "Thêm mới thành công chi tiết của dự án", "success");
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                                    swal("Oops...", "Thêm Thất Bại!", "error");
+                                    response.preventDefault();
                         }
                     });
                   }

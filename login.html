@@ -34,7 +34,8 @@
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/responsive.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
         <style type="text/css">
             /*--bottom-to-top --*/
@@ -161,19 +162,19 @@
                     <div class="box-for overflow" >
                         <div class="col-md-12 col-xs-12 login-blocks">
                             <h2>Đăng nhập : </h2>
-                            <form action="customer.html" id="formLogin">
+                            <form action="/login" id="formLogin">
                                 <div class="form-group">
                                     <label for="username">Tên đăng nhập</label>
-                                    <input type="text" class="form-control" name="username" required minlength="3" maxlength="20">
+                                    <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="20">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Mật khẩu</label>
-                                    <input type="password" class="form-control" name="password" required minlength="6" maxlength="10">
+                                    <input type="password" class="form-control" id="password" name="password" required minlength="6" maxlength="10">
                                 </div>
                                 <div id="projectDetailId" class="form-group">
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-default" onclick="login();"> Đăng nhập </button>
+                                    <input  type="button" class="btn btn-default" onclick="login();"> Đăng nhập </input>
                                 </div>
                             </form>
                             <br>
@@ -269,24 +270,29 @@
             function login(){
                 
                 var employeeId =getUrlVar('employeeId');
-                var formData = new FormData(document.getElementById('formLogin'));
-                var usernameInput = formData.get("username");
-                var passwordInput = formData.get("password");
-                $.getJSON("http://localhost:8080/employee/getOne/"+employeeId, function (employee) {
-                    console.log(employee);
-
-                    var username = employee.userName;
-                    var password = employee.password;
-                    console.log(username + password + "------------" + usernameInput + passwordInput);
-                    if(username == usernameInput && password == passwordInput){
-                        alert("Login success");
-                        //window.open('customer.html');
-                    }else {
-                        alert("Invalid username or password");
-                        location.reload();
-                    }
-                });    
                 // var formData = new FormData(document.getElementById('formLogin'));
+                // var usernameInput = formData.get("username");
+                // var passwordInput = formData.get("password");
+                // $.getJSON("http://localhost:8080/employee/getOne/"+employeeId, function (employee) {
+                //     console.log(employee);
+
+                //     var username = employee.userName;
+                //     var password = employee.password;
+                //     console.log(username + password + "------------" + usernameInput + passwordInput);
+                //     if(username == usernameInput && password == passwordInput){
+                //         alert("Login success");
+                //         //window.open('customer.html');
+                //     }else {
+                //         alert("Invalid username or password");
+                //         location.reload();
+                //     }
+                // });    
+
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                //alert(username + "-" +password);
+             //   var formData = new FormData(document.getElementById('formLogin'));
                 // var data=
                 //     JSON.stringify({
                 //     username: formData.get("username"),
@@ -294,22 +300,22 @@
                 //     projectDetailId: projectDetailId
                 //     });
                 // console.log(data);
-                // $.ajax({
-                //     type: "post",
-                //     url: "http://localhost:8080/login",
-                //     contentType: "application/json",
-                //     //dataType: "json",
-                //     data:data,
-                //     success: function(response){
-                //                 console.log(response);
-                //                 alert("Login success");
-                //                 window.location.reload('customer.html');
-                //             },
-                //     error: function(response){
-                //         alert("Invalid username or password");
-                //         location.reload();
-                //     }
-                // })
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/login",
+                    contentType: "application/x-www-form-urlencoded",
+                    //dataType: "json",
+                    data: "username="+username+"&password="+password,
+                    success: function(response){
+                                console.log(response);
+                                swal("Good job!", "Đăng Nhập Thành Công!", "success");
+                                window.location.reload('customer.html');
+                            },
+                    error: function(response){
+                        swal("Oops...", "Đăng Nhập Thất Bại!", "error");
+                        location.reload();
+                    }
+                })
             }
             function loadProjectDetailId(){
                 var projectDetailId =getUrlVar('projectDetailId');

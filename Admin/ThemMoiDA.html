@@ -39,6 +39,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 
 <style type="text/css">
     body {
@@ -366,7 +368,7 @@
         <script type="text/javascript">
             function createProject(){
                 var formData = document.getElementById("projectFormCreate");
-                var filesSelected = document.getElementById("image").files;
+                var filesSelected = document.getElementById("imageProject").files;
                 if (filesSelected.length > 0) {
                   var fileToLoad = filesSelected[0];
 
@@ -376,12 +378,12 @@
                     var srcData = fileLoadedEvent.target.result; // <--- data: base64
                     var data = JSON.stringify({
                         projectName: formData.elements["projectName"].value,
-                        address: formData.elements["formAddress"].value,
-                        imageUrl : {
+                        addressId: formData.elements["formAddress"].value,
+                        description: formData.elements["description"].value,
+                        image : {
                             image: srcData.substring(23),
                             type: "jpg"
                         },
-                        description: formData.elements["description"].value,
                         projectTypeId: formData.elements["formTypeProject"].value
                     });
                     $.ajax({
@@ -391,13 +393,11 @@
                         //dataType: "json",
                         data:data,
                         success: function(response){
-                                    //console.log(response);
-                                    alert("Submit success");
-                                    //window.location.reload('customer.html');
+                                    swal("Good job!", "Thêm Mới Dự Án Thành Công!", "success");
                                 },
                         error: function(response){
-                            alert("Failllllllll");
-                            location.reload();
+                                    swal("Oops...", "Thêm Thất Bại!", "error");
+                                    response.preventDefault();
                         }
                     })
                   }
