@@ -348,11 +348,18 @@
                         <label>Mật khẩu</label>
                         <input type="text" name="password" class="form-control" required minlength="6" maxlength="10">
                     </div>
-                    <div class="form-group">
-                        <label>Quyền</label>
+                    <!-- <div class="form-group">
+                        <label>Quyền </label>
                         <input type="text" name="role" class="form-control" required  maxlength="10">
+                    </div> -->
+                    <div class="form-group">
+                    <label>Quyền</label>
+                                <select id="formRole" style="width: 100%;height:35px" required >
+                                    <option value="" disabled="" selected=""> - Chọn quyền nhân viên - </option>
+                                    <option value="R1">Admin</option>
+                                    <option value="R2">User</option>
+                                </select>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <a href="AdminQLNV.html"><input type="button" class="btn btn-default" value="Huỷ bỏ"></a><br><br>
@@ -399,7 +406,7 @@
                         },
                         userName: formData.elements["userName"].value,
                         password: formData.elements["password"].value,
-                        roleId: formData.elements["role"].value
+                        roleId: formData.elements["formRole"].value
                     });
                     console.log(data);
                     $.ajax({

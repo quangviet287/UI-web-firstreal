@@ -220,7 +220,7 @@
                         <input type="text" name="bookId" value="" type="hidden" disabled/>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ bỏ"><br><br>
+                        <input type="button" class="btn btn-default" onclick="destroy();" data-dismiss="modal" value="Huỷ bỏ"><br><br>
                         <input type="button" data-dismiss="modal" onclick="confirm();" class="btn btn-default" value="Xác Nhận Giao Dịch">
                     </div>
                 </form>
@@ -332,7 +332,7 @@
                         success: function(response){
                                     //console.log(response);
                                    swal("Good job!", "Tạo Thông Giao Dịch Thành Công!", "success");
-                                    location.reload();
+                                   // location.reload();
                                     //window.location.reload('customer.html');
                                 },
                         error: function(response){
@@ -340,6 +340,9 @@
                             //location.reload();
                         }
                     });
+            }
+            function destroy() {
+                
             }
         </script>
         <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>

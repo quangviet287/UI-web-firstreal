@@ -318,10 +318,10 @@
                         <th>
                         </th>
                         <th>Mã giao dich</th> 
-                        <th>Ma Chi Tiet Du An</th>
-                        <th>Ten khach hang</th>
-                        <th>Ten Nhan Vien</th>
-                        <th>Mgay Giao Dich</th>
+                        <th>Mã chi tiết dự án</th>
+                        <th>Tên khách hàng</th>
+                        <th>Tên nhân viên</th>
+                        <th>Mgày giao dịch</th>
                     </tr>
                 </thead>
                 <tbody id="detailTransaction">
@@ -373,11 +373,11 @@
                     var item;
                     console.log(detail);
                     var date = new Date(detail.dateCreate);
-                    var d = date.getDate()+"-"+ date.getMonth()+"-"+ date.getFullYear();
+                    // var d = date.getDate()+"-"+ date.getMonth()+"-"+ date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()+":"date.getSeconds();
                     var customerName =  detail.customer.customerName;
                     var employeeName = detail.projectDetail.employee.employeeName;
                     var transactionId = detail.id;
-                    console.log(d);
+                    console.log(date);
                     $.each(detail, function (index, detail) {
                         item = (
                             '<tr>'+
@@ -387,7 +387,7 @@
                                 '<td>'+projectDetailId+'</td>'+
                                 '<td>'+customerName+'</td>'+
                                 '<td>'+employeeName+'</td>'+
-                                '<td>'+d+'</td>'+
+                                '<td>'+date+'</td>'+
                              '</tr>'
                         );
                     });

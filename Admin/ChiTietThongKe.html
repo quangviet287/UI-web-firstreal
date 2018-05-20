@@ -375,11 +375,11 @@
                     var item;
                     console.log(detail);
                     var date = new Date(detail.dateCreate);
-                    var d = date.getDate()+"-"+ date.getMonth()+"-"+ date.getFullYear();
+                    //var d = date.getTime();
                     var customerName =  detail.customer.customerName;
                     var employeeName = detail.projectDetail.employee.employeeName;
                     var transactionId = detail.id;
-                    console.log(d);
+                    console.log(date);
                     $.each(detail, function (index, detail) {
                         item = (
                             '<tr>'+
@@ -389,7 +389,7 @@
                                 '<td>'+projectDetailId+'</td>'+
                                 '<td>'+customerName+'</td>'+
                                 '<td>'+employeeName+'</td>'+
-                                '<td>'+d+'</td>'+
+                                '<td>'+date+'</td>'+
                              '</tr>'
                         );
                     });

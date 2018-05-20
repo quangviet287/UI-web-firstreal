@@ -162,7 +162,7 @@
                     <div class="box-for overflow" >
                         <div class="col-md-12 col-xs-12 login-blocks">
                             <h2>Đăng nhập : </h2>
-                            <form action="/login" id="formLogin">
+                            <form id="formLogin">
                                 <div class="form-group">
                                     <label for="username">Tên đăng nhập</label>
                                     <input type="text" class="form-control" id="username" name="username" required minlength="3" maxlength="20">
@@ -174,7 +174,7 @@
                                 <div id="projectDetailId" class="form-group">
                                 </div>
                                 <div class="text-center">
-                                    <input  type="button" class="btn btn-default" onclick="login();"> Đăng nhập </input>
+                                    <input id="loginButton" type="button" class="btn btn-default" onclick="login();"> Đăng nhập </input>
                                 </div>
                             </form>
                             <br>
@@ -268,8 +268,9 @@
                 loadProjectDetailId();
             });
             function login(){
-                
+                //var newWindow = window.open("","_blank");
                 var employeeId =getUrlVar('employeeId');
+                var projectDetailId = getUrlVar('projectDetailId');
                 // var formData = new FormData(document.getElementById('formLogin'));
                 // var usernameInput = formData.get("username");
                 // var passwordInput = formData.get("password");
@@ -289,31 +290,35 @@
                 // });    
 
                 var username = $("#username").val();
-                var password = $("#password").val();
+                //var password = $("#password").val();
 
                 //alert(username + "-" +password);
              //   var formData = new FormData(document.getElementById('formLogin'));
-                // var data=
-                //     JSON.stringify({
-                //     username: formData.get("username"),
-                //     password: formData.get("password"),
-                //     projectDetailId: projectDetailId
-                //     });
+                var data=
+                    JSON.stringify({
+                    username: $("#username").val(),
+                    password: $("#password").val()
+                    });
                 // console.log(data);
                 $.ajax({
                     type: "POST",
                     url: "http://localhost:8080/login",
-                    contentType: "application/x-www-form-urlencoded",
+                    contentType: "application/json",
+                    // contentType: "application/x-www-form-urlencoded",
                     //dataType: "json",
-                    data: "username="+username+"&password="+password,
+                    //data: "username="+username+"&password="+password,
+                    data: data,
                     success: function(response){
                                 console.log(response);
                                 swal("Good job!", "Đăng Nhập Thành Công!", "success");
-                                window.location.reload('customer.html');
+                                window.open('customer.html?username='+username+'&projectDetailId='+projectDetailId);
+                                 //window.open(response['customer.html']);
+                                 //newWindow.location.href= 'customer.html';
+                                 response.preventDefault();
                             },
                     error: function(response){
                         swal("Oops...", "Đăng Nhập Thất Bại!", "error");
-                        location.reload();
+                        //location.reload();
                     }
                 })
             }
