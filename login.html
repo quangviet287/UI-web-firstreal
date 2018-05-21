@@ -174,7 +174,7 @@
                                 <div id="projectDetailId" class="form-group">
                                 </div>
                                 <div class="text-center">
-                                    <input id="loginButton" type="button" class="btn btn-default" onclick="login();"> Đăng nhập </input>
+                                    <button id="loginButton" type="button" class="btn btn-default" onclick="login();"> Đăng nhập </button>
                                 </div>
                             </form>
                             <br>
@@ -289,8 +289,8 @@
                 //     }
                 // });    
 
-                var username = $("#username").val();
-                //var password = $("#password").val();
+                var usr = $("#username").val();
+                var pass = $("#password").val();
 
                 //alert(username + "-" +password);
              //   var formData = new FormData(document.getElementById('formLogin'));
@@ -309,15 +309,28 @@
                     //data: "username="+username+"&password="+password,
                     data: data,
                     success: function(response){
-                                console.log(response);
-                                swal("Good job!", "Đăng Nhập Thành Công!", "success");
-                                window.open('customer.html?username='+username+'&projectDetailId='+projectDetailId);
-                                 //window.open(response['customer.html']);
-                                 //newWindow.location.href= 'customer.html';
-                                 response.preventDefault();
+                                // console.log(response);
+                                // swal("Good job!", "Đăng Nhập Thành Công!", "success");
+                                // window.open('customer.html?username='+username+'&projectDetailId='+projectDetailId);
+                                //  //window.open(response['customer.html']);
+                                //  //newWindow.location.href= 'customer.html';
+                                //  response.preventDefault();
+                                $.getJSON("http://localhost:8080/employee/getOne/"+employeeId, function (employee) {
+                                    console.log(employee);
+
+                                    var username = employee.userName;
+                                    var password = employee.password;
+                                    console.log(username + password + "------------" + usr + pass);
+                                    if(username == usr && password == pass){
+                                       swal("Good job!", "Đăng Nhập Thành Công!", "success");
+                                       window.open('customer.html?username='+username+'&projectDetailId='+projectDetailId);
+                                    }else {
+                                        swal("Oops...", "Đăng Nhập Thất Bại, Bạn Không Thuộc Dự Án Này!", "error");
+                                    }
+                                });
                             },
                     error: function(response){
-                        swal("Oops...", "Đăng Nhập Thất Bại!", "error");
+                        swal("Oops...", "Đăng Nhập Thất Bại!, User không tồn tại", "error");
                         //location.reload();
                     }
                 })

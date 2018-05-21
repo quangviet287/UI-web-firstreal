@@ -217,7 +217,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Bạn có chắc chắn muốn thực hiện giao dịch này?</p>
-                        <input type="text" name="bookId" value="" type="hidden" disabled/>
+                        <input type="text" name="bookId" value="" type="hidden" disabled hidden="true" />
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" onclick="destroy();" data-dismiss="modal" value="Huỷ bỏ"><br><br>
@@ -342,7 +342,23 @@
                     });
             }
             function destroy() {
-                
+                var formData = document.getElementById("confirmTransaction");
+                var projectDetailId = formData.elements["bookId"].value;
+                $.ajax({
+                        type: "DELETE",
+                        url: "http://localhost:8080/transaction/destroy/"+projectDetailId,
+                        contentType: "application/json",
+                        success: function(response){
+                                    //console.log(response);
+                                   swal("Good job!", "Hủy Giao Dịch Thành Công!", "success");
+                                   // location.reload();
+                                    //window.location.reload('customer.html');
+                                },
+                        error: function(response){
+                            swal("Oops...", "Tạo Giao Dịch Thất Bại!", "error");
+                            //location.reload();
+                        }
+                    });
             }
         </script>
         <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 0;"> </span></a>

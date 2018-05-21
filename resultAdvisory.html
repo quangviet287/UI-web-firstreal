@@ -102,10 +102,10 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse yamm" id="navigation">
-                    <div class="button navbar-right">
+                    <!-- <div class="button navbar-right">
                         <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('login.html')" data-wow-delay="0.45s">Đăng nhập</button>
 
-                    </div>
+                    </div> -->
 
                     <ul class="main-nav nav navbar-nav navbar-right">
 
@@ -167,7 +167,7 @@
                                 <h3 class="panel-title">Tìm kiếm  </h3>
                             </div>
                             <div class="panel-body search-widget">
-                                <form action="" class=" form-inline"> 
+                                <!-- <form action="" class=" form-inline"> 
                                     
 
                                     <fieldset>
@@ -248,7 +248,48 @@
                                             </div>  
                                         </div>
                                     </fieldset>                                     
-                                </form>
+                                </form> -->
+                                <form method="GET" action="resultSearch.html" class=" form-inline">
+                                <div class="form-group">
+                                    <select id="basic" name="direction" class="selectpicker show-tick form-control" >
+                                        <option> - Chọn hướng - </option>
+                                        <option value="Dong">Đông </option>
+                                        <option value="Tay">Tây</option> 
+                                        <option value="Nam">Nam </option>
+                                        <option value="Bac">Bắc </option>
+                                        <option value="DongNam">Đông - Nam </option>
+                                        <option value="DongBac">Đông - Bắc </option>
+                                        <option value="TayNam">Tây - Nam </option>
+                                        <option value="TayBac">Tây - Bắc </option>
+                                    </select>
+                                </div><br><br>
+                                 <div class="form-group">
+                                    <select id="basic" name="price" class="selectpicker show-tick form-control" >
+                                        <option selected="">- Giá cao nhất -</option>
+                                                        <option value="0.5" >  500 triệu</option>
+                                                        <option value="0.8" > 800 triệu</option>
+                                                        <option value="1">  1 tỷ</option>
+                                                        <option value="2">  2 tỷ</option>
+                                                        <option value="3">  3 tỷ</option>
+                                                        <option value="5"> 5 tỷ </option>
+                                    </select>
+                                </div><br><br>
+                                <div class="form-group">
+                                    <select id="basic" name="size" class="selectpicker show-tick form-control" >
+                                        <option selected="">- Diện tích cao nhất -</option>
+                                                        <option value="100"> 100 m2</option>
+                                                        <option value="150"> 150 m2</option>
+                                                        <option value="200"> 200 m2</option>
+                                                        <option value="250"> 250 m2</option>
+                                                        <option value="300"> 300 m2</option>
+                                                        <option value="350"> 350 m2</option>
+                                    </select>
+                                </div><br><br>
+                                <button class="btn search-btn" type="submit" style="width:120px">
+                                <i class="fa fa-search"></i>
+                                    Tìm Kiếm
+                                </button>
+                            </form>
                             </div>
                         </div>
                         <div class="panel panel-default sidebar-menu wow fadeInRight animated" >
@@ -256,7 +297,7 @@
                                 <h3 class="panel-title">Tư Vấn Phong Thuỷ  </h3>
                             </div>
                             <div class="panel-body search-widget">
-                                <form action="properties.html" class="form-inline" > 
+                                <!-- <form action="properties.html" class="form-inline" > 
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-xs-6">
@@ -297,7 +338,40 @@
                                             </div>  
                                         </div>
                                     </fieldset>                                     
-                                </form>
+                                </form> -->
+                                <form method="GET" action="resultAdvisory.html" class="form-inline">
+                                <div class="form-group" >
+                                    <select id="formAge" name="age" class="selectpicker show-tick form-control" required="">
+                                                        <option name="age" value="" disabled selected>Chọn Tuổi</option>
+                                                        <option name="age" value="Ty" > Tý</option>
+                                                        <option name="age" value="Suu" > Sửu</option>
+                                                        <option name="age" value="Dan"> Dần</option>
+                                                        <option name="age" value="Meo"> Mẹo</option>
+                                                        <option name="age" value="Thin">Thìn</option>
+                                                        <option name="age" value="Ty"> Tỵ</option>
+                                                        <option name="age" value="Ngo"> Ngọ</option>
+                                                        <option name="age" value="Mui">Mùi</option>
+                                                        <option name="age" value="Than">Thân</option>
+                                                        <option name="age" value="Dau">Dậu </option>
+                                                        <option name="age" value="Tuat">Tuất </option>
+                                                        <option name="age" value="Hoi">Hợi</option>
+                                                </select>
+                                </div>
+                                <br><br>
+                                <div class="form-group">
+                                    <select id="formSex" name="sex" class="selectpicker show-tick form-control">
+                                                        <option name="sex" value="" disabled selected>Chọn Giới Tính</option>
+                                                        <option name="sex" value="true" > Nam</option>
+                                                        <option name="sex" value="false" > Nữ</option>
+                                                </select>
+                                    </select>
+                                </div>
+                                <br><br>
+                                <button class="btn search-btn" type="submit"  style="width: 150px">
+                                <i class="fa fa-search"></i>
+                                Xem Tư Vấn
+                                </button>
+                            </form>
                             </div>
                         </div>
 
@@ -359,7 +433,7 @@
                             </div>  -->
                         </div>
                     </div>
-                    <div class="col-md-12"> 
+                    <!-- <div class="col-md-12"> 
                         <div class="pull-right">
                             <div class="pagination">
                                 <ul>
@@ -372,7 +446,7 @@
                                 </ul>
                             </div>
                         </div>                
-                    </div>
+                    </div> -->
                 </div>  
                 </div>              
             </div>
@@ -478,6 +552,7 @@
                                         '<div class="dot-hr"></div>'+
                                         '<span class="pull-left"><b> Diện tích :</b> '+details.size+' </span>'+
                                         '<span class="proerty-price pull-right"> '+details.price+' tỷ</span>'+
+                                        '<span class="pull-left"><b> Dự Án :</b> '+details.projectName+' </span>'+
                                         '<a href="property.html?projectDetailId='+details.projectDetailId+'&employeeId='+details.employeeId+'"><input type="button" value="Xem Chi Tiết" class="navbar-btn nav-button wow bounceInRight login" style="width: 100%"></a>'+
                                     '</div>'+
                                 '</div>'+
